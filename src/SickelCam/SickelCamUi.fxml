@@ -96,11 +96,6 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Button fx:id="calculateParting" mnemonicParsing="false" onAction="#calculateParting" prefWidth="200.0" text="Skapa delningsgeometri">
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Button>
                            </children>
                         </HBox>
                      </children>
@@ -145,11 +140,7 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </TextField>
-                           </children>
-                        </HBox>
-                        <HBox layoutX="-14.0" layoutY="102.0" prefHeight="50.0" prefWidth="1024.0">
-                           <children>
-                              <Button mnemonicParsing="false" onAction="#calculateCutGeo" prefWidth="200.0" text="Skapa skärgeometri">
+                              <Button mnemonicParsing="false" onAction="#calculateCutGeo" prefWidth="200.0" text="Skapa gnistprogram">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
@@ -159,6 +150,7 @@
                               </Button>
                            </children>
                         </HBox>
+                        <HBox layoutX="-14.0" layoutY="102.0" prefHeight="50.0" prefWidth="1024.0" />
                      </children>
                   </Pane>
                </children>

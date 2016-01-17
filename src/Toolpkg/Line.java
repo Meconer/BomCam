@@ -36,5 +36,5 @@ public class Line extends Geometry {
         return yEnd;
     }
 
-    
+
 }

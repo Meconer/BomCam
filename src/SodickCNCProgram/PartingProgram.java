@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Toolpkg;
+package SodickCNCProgram;
 
 /**
  *
  * @author Mats
  */
-public class Constants {
-    public final static double START_LENGTH = 0.5;
-    public final static double FIRST_RELIEF_FACTOR = 0.9773;
-    public final static double SECOND_RELIEF_FACTOR = 0.95;
+class PartingProgram {
+    
 }

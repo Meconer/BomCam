@@ -35,49 +35,17 @@ public class FXMLDocumentController implements Initializable {
     private TextField sideAngle;
 
     @FXML
-    private TextField clearanceLength;
-
-    @FXML
-    private TextField radiusAtTip;
-
-    @FXML
-    private TextField straightFrontLength;
-
-    @FXML
     void calculateCutGeo(ActionEvent event) {
         
-        sickel.calculateCutGeo();
+        sickel.calculate();
         
     }
     
-    @FXML
-    private void calculateParting(ActionEvent event) {
-        sickel.calculateParting();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sickel = new Sickel();
 
-//        Pattern validDoubleText = Pattern.compile("-?((\\d*)|(\\d+\\.\\d*))");
-//        
-//        TextFormatter<Double> stockDiaFmt = new TextFormatter<Double>(new DoubleStringConverter(), 0.0, 
-//            change -> {
-//                String newText = change.getControlNewText() ;
-//                if (validDoubleText.matcher(newText).matches()) {
-//                    return change ;
-//                } else return null ;
-//            });
-//        
-//        stockDia.setTextFormatter(stockDiaFmt);
-//        stockDia.setText( String.valueOf( bom.getStockDia() ) );
-//        stockDiaFmt.valueProperty().addListener( (obs, oldValue, newValue ) -> {
-//            bom.setStockDia( newValue );
-//        });
-
-
         StringConverter<Number> converter = new NumberStringConverter();
-        
         
         Bindings.bindBidirectional(stockDia.textProperty(), sickel.getStockDiaProperty(), converter );
         Bindings.bindBidirectional(stockLength.textProperty(), sickel.getLengthProperty(), converter );
