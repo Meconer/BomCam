@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bomcam;
+package Toolpkg;
 
 /**
  *
  * @author Mats
  */
-public class Geometry {
-    
+public class Constants {
+    public final static double START_LENGTH = 0.5;
 }

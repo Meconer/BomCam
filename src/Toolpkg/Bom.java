@@ -1,6 +1,7 @@
 
-package bomcam;
+package Toolpkg;
 
+import Toolpkg.Chain;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -10,9 +11,7 @@ import javafx.beans.property.SimpleDoubleProperty;
  */
 public class Bom {
     
-    private final DoubleProperty stockDia;      // Diameter på ämnet
-    private final DoubleProperty length;        // Ämnets längd
-    private final DoubleProperty halfLength;    // Till vilken längd ämnet skall delas på hälften
+    private final PartedBlank partedBlank;            // Delat runt ämne med längd och dia delat på hälften
     
     private final DoubleProperty noseRadius;          // Spetsens nosradie
     private final DoubleProperty clearance;           // Frigång från spetsen i x-led
@@ -27,9 +26,7 @@ public class Bom {
 
     public Bom() {
         // Set up default values
-        stockDia = new SimpleDoubleProperty( 12);
-        length = new SimpleDoubleProperty(50);
-        halfLength = new SimpleDoubleProperty(10);
+        partedBlank = new PartedBlank(12, 50, 10);
         noseRadius = new SimpleDoubleProperty(0.2);
         clearance = new SimpleDoubleProperty(0.5);
         clearanceLength = new SimpleDoubleProperty(10);
@@ -38,50 +35,47 @@ public class Bom {
     }
 
     public double getStockDia() {
-        return stockDia.get();
-    }
-
-    public void setStockDia(double stockDia) {
-        this.stockDia.set(stockDia);
+        return partedBlank.getStockDia();
     }
 
     public DoubleProperty getStockDiaProperty() {
-        return stockDia;
+        return partedBlank.getStockDiaProperty();
     }
     
-    public double getLength() {
-        return length.get();
+    public double getStockLength() {
+        return partedBlank.getStockLength();
     }
 
-    public void setLength(double length) {
-        this.length.set( length );
-    }
+//    public void setLength(double length) {
+//        partedBlank.getStockLengthProperty().set( length );
+//    }
+//    
     
     public DoubleProperty getLengthProperty() {
-        return length;
+        return partedBlank.getStockLengthProperty();
     }
     
 
     public double getHalfLength() {
-        return halfLength.get();
+        return partedBlank.getHalfLength();
     }
 
-    public void setHalfLength(double halfLength) {
-        this.halfLength.set( halfLength );
-    }
-
+//    public void setHalfLength(double halfLength) {
+//        this.halfLength.set( halfLength );
+//    }
+//
     public DoubleProperty getHalfLengthProperty() {
-        return halfLength;
+        return partedBlank.getHalfLengthProperty();
     }
     
     public double getNoseRadius() {
         return noseRadius.get();
     }
 
-    public void setNoseRadius(double noseRadius) {
-        this.noseRadius.set( noseRadius );
-    }
-
+//    public void setNoseRadius(double noseRadius) {
+//        this.noseRadius.set( noseRadius );
+//    }
+//
     public DoubleProperty getNoseRadiusProperty() {
         return noseRadius;
     }
@@ -90,10 +84,10 @@ public class Bom {
         return clearance.get();
     }
 
-    public void setClearance(double clearance) {
-        this.clearance.set( clearance );
-    }
-
+//    public void setClearance(double clearance) {
+//        this.clearance.set( clearance );
+//    }
+//
     public DoubleProperty getClearanceProperty() {
         return clearance;
     }
@@ -102,10 +96,10 @@ public class Bom {
         return clearanceLength.get();
     }
 
-    public void setClearanceLength(double clearanceLength) {
-        this.clearanceLength.set( clearanceLength );
-    }
-
+//    public void setClearanceLength(double clearanceLength) {
+//        this.clearanceLength.set( clearanceLength );
+//    }
+//
     public DoubleProperty getClearanceLengthProperty() {
         return clearanceLength;
     }
@@ -114,10 +108,10 @@ public class Bom {
         return radiusAtTip.get();
     }
 
-    public void setRadiusAtTip(double radiusAtTip) {
-        this.radiusAtTip.set( radiusAtTip );
-    }
-
+//    public void setRadiusAtTip(double radiusAtTip) {
+//        this.radiusAtTip.set( radiusAtTip );
+//    }
+//
     public DoubleProperty getRadiusAtTipProperty() {
         return radiusAtTip;
     }
@@ -127,10 +121,10 @@ public class Bom {
         return straightFrontLength.get();
     }
 
-    public void setStraightFrontLength(double straightFrontLength) {
-        this.straightFrontLength.set( straightFrontLength );
-    }
-
+//    public void setStraightFrontLength(double straightFrontLength) {
+//        this.straightFrontLength.set( straightFrontLength );
+//    }
+//
     public DoubleProperty getStraightFrontLengthProperty() {
         return straightFrontLength;
     }
@@ -138,39 +132,19 @@ public class Bom {
 
     
     public void calculateParting() {
-        double stockRadius = stockDia.get() / 2;
-        double xStart = halfLength.get() + stockRadius ;
-      
-        // Starta länken
-        partingChain = new Chain();
-        
-        // Börja med två startsträckor
-        partingChain.add(new Line(xStart, -stockRadius - START_LENGTH * 2, xStart , -stockRadius - START_LENGTH ));
-        partingChain.add(new Line(xStart, -stockRadius - START_LENGTH , xStart , -stockRadius ));
-        
-        // 45-graderslinjen fram till radien
-        double cornDist = 2 * Math.atan(Math.PI/8);
-        partingChain.add(new Line(xStart, -stockRadius, halfLength.get() - cornDist + Math.sqrt(2) , -2 + Math.sqrt(2)));
-        
-        // R2 vid övergången
-        partingChain.add(new Arc(halfLength.get() - cornDist, -2, 2, 45, 90 ) );
-        
-        // Horisontell linje till spetsen
-        partingChain.add(new Line( halfLength.get() - cornDist, 0, 0, 0 ));
-        
-        // Två slutsträckor
-        partingChain.add(new Line( 0, 0, -START_LENGTH, 0 ));
-        partingChain.add(new Line( -START_LENGTH, 0, -2 * START_LENGTH, 0 ));
-        
+
+        partingChain = partedBlank.calculatePartingChain();
+
         partingChain.saveChainToDXF();
+
     }
 
-    void calculateCutGeo() {
+    public void calculateCutGeo() {
         // Starta länken
         cutGeoChain = new Chain();
         
         // Börja med två startsträckor
-        double stockRadius = stockDia.get()/2;
+        double stockRadius = partedBlank.getStockDia()/2;
         double xStart = (stockRadius-radiusAtTip.get()) + clearance.get() + clearanceLength.get();
         double yStart = -stockRadius;
         cutGeoChain.add(new Line( xStart, yStart-1, xStart, yStart - 0.5 ));
@@ -196,13 +170,13 @@ public class Bom {
         cutGeoChain.add(new Arc( centerX, centerY, noseRadius.get(), 280, 180));
         
         // Raksträcka för plansvarvning som angivet.
-        double endOfStraight = -radiusAtTip.get() + straightFrontLength.get();
-        cutGeoChain.add(new Line(0, centerY, 0, endOfStraight ));
+        double endOfFront = -radiusAtTip.get() + straightFrontLength.get();
+        cutGeoChain.add(new Line(0, centerY, 0, endOfFront ));
         
         // 30 grader vidare ut till ämneskanten.
-        double leftY = stockRadius - endOfStraight;
+        double leftY = stockRadius - endOfFront;
         double xEnd = leftY * Math.tan(Math.toRadians(30));
-        cutGeoChain.add( new Line( 0, endOfStraight, xEnd, stockRadius ));
+        cutGeoChain.add( new Line( 0, endOfFront, xEnd, stockRadius ));
         
         // Två slutsträckor
         cutGeoChain.add(new Line( xEnd, stockRadius, xEnd, stockRadius + START_LENGTH));

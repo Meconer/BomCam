@@ -1,7 +1,7 @@
 
-package bomcam;
+package SickelCam;
 
-import Toolpkg.Bom;
+import Toolpkg.Sickel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
@@ -18,7 +18,7 @@ import javafx.util.converter.NumberStringConverter;
  */
 public class FXMLDocumentController implements Initializable {
     
-    Bom bom = new Bom();
+    Sickel sickel = new Sickel();
     @FXML
     private TextField stockDia;
 
@@ -29,10 +29,10 @@ public class FXMLDocumentController implements Initializable {
     private TextField halfLength;
     
     @FXML
-    private TextField noseRadius;
+    private TextField tipDia;
 
     @FXML
-    private TextField clearance;
+    private TextField sideAngle;
 
     @FXML
     private TextField clearanceLength;
@@ -46,18 +46,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void calculateCutGeo(ActionEvent event) {
         
-        bom.calculateCutGeo();
+        sickel.calculateCutGeo();
         
     }
     
     @FXML
     private void calculateParting(ActionEvent event) {
-        bom.calculateParting();
+        sickel.calculateParting();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        bom = new Bom();
+        sickel = new Sickel();
 
 //        Pattern validDoubleText = Pattern.compile("-?((\\d*)|(\\d+\\.\\d*))");
 //        
@@ -79,14 +79,11 @@ public class FXMLDocumentController implements Initializable {
         StringConverter<Number> converter = new NumberStringConverter();
         
         
-        Bindings.bindBidirectional(stockDia.textProperty(), bom.getStockDiaProperty(), converter );
-        Bindings.bindBidirectional(stockLength.textProperty(), bom.getLengthProperty(), converter );
-        Bindings.bindBidirectional(halfLength.textProperty(), bom.getHalfLengthProperty(), converter );
-        Bindings.bindBidirectional(noseRadius.textProperty(), bom.getNoseRadiusProperty(), converter );
-        Bindings.bindBidirectional(clearance.textProperty(), bom.getClearanceProperty(), converter );
-        Bindings.bindBidirectional(clearanceLength.textProperty(), bom.getClearanceLengthProperty(), converter );
-        Bindings.bindBidirectional(radiusAtTip.textProperty(), bom.getRadiusAtTipProperty(), converter );
-        Bindings.bindBidirectional(straightFrontLength.textProperty(), bom.getStraightFrontLengthProperty(), converter );
+        Bindings.bindBidirectional(stockDia.textProperty(), sickel.getStockDiaProperty(), converter );
+        Bindings.bindBidirectional(stockLength.textProperty(), sickel.getLengthProperty(), converter );
+        Bindings.bindBidirectional(halfLength.textProperty(), sickel.getHalfLengthProperty(), converter );
+        Bindings.bindBidirectional(tipDia.textProperty(), sickel.getTipDiaProperty(), converter );
+        Bindings.bindBidirectional(sideAngle.textProperty(), sickel.getSideAngleProperty(), converter );
     }    
     
 }
