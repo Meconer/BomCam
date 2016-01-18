@@ -1,8 +1,6 @@
 
 package Toolpkg;
 
-import Toolpkg.Chain;
-import com.oracle.jrockit.jfr.InstantEvent;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -86,7 +84,7 @@ public class Sickel {
     
 
     // Beräknar geometri för att dela ämnet på hälften
-    public Chain calculateParting() {
+    private Chain calculateParting() {
 
         Chain partingChain = partedBlank.calculatePartingChain();
 
@@ -94,7 +92,7 @@ public class Sickel {
     }
 
     // Beräknar geometri för skäret. 
-    public Chain calculateCutGeo() {
+    private Chain calculateCutGeo() {
         // Starta länken
         Chain cutGeoChain = new Chain();
         
@@ -196,6 +194,10 @@ public class Sickel {
         Chain cutGeoChain = calculateCutGeo();
         Chain firstReleifChain = calculateFirstReliefChain();
         Chain secondReliefChain = calculateSecondReliefChain();
+        partChain.saveChainToDXF();
+        cutGeoChain.saveChainToDXF();
+        firstReleifChain.saveChainToDXF();
+        secondReliefChain.saveChainToDXF();
     }
     
     
