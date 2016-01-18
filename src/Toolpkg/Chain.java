@@ -9,7 +9,7 @@ import java.util.Iterator;
  *
  * @author Mats
  */
-class Chain {
+public class Chain {
 
     ArrayList<Geometry> list;
 

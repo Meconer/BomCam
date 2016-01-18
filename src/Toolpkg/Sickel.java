@@ -1,6 +1,7 @@
 
 package Toolpkg;
 
+import SodickSickelProgram.SodickCNCProgram;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -194,10 +195,13 @@ public class Sickel {
         Chain cutGeoChain = calculateCutGeo();
         Chain firstReleifChain = calculateFirstReliefChain();
         Chain secondReliefChain = calculateSecondReliefChain();
-        partChain.saveChainToDXF();
-        cutGeoChain.saveChainToDXF();
-        firstReleifChain.saveChainToDXF();
-        secondReliefChain.saveChainToDXF();
+//        partChain.saveChainToDXF();
+//        cutGeoChain.saveChainToDXF();
+//        firstReleifChain.saveChainToDXF();
+//        secondReliefChain.saveChainToDXF();
+        
+        SodickCNCProgram program = new SodickCNCProgram();
+        program.setChains( partChain, cutGeoChain, firstReleifChain, secondReliefChain );
     }
     
     
