@@ -10,5 +10,12 @@ package SodickSickelProgram;
  * @author Mats
  */
 public class SecondReliefProgram extends GeoProgram {
+
+    String fileName;
+
+    void build(String fileName) {
+        this.fileName = fileName;
+        
+    }
     
 }

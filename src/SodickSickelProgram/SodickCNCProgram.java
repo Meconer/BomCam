@@ -33,10 +33,14 @@ public class SodickCNCProgram {
         firstReliefProgram.setChain(firstReleifChain);
         secondReliefProgram.setChain(secondReliefChain);
         
-        mainProgram.setPartStartEnd( partChain );
+        
     }
     
     public void buildProgram() {
+        partProgram.build("F0S0.NC");
+        cutProgram.build("F90S10.NC");
+        firstReliefProgram.build("G120S5.NC");
+        secondReliefProgram.build("G120S5.NC");
     
     }   
     

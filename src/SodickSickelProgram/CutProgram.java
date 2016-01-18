@@ -10,5 +10,11 @@ package SodickSickelProgram;
  * @author matsandersson
  */
 public class CutProgram extends GeoProgram {
-    
+    String fileName;
+
+    void build(String fileName) {
+        this.fileName = fileName;
+        
+    }
+  
 }
