@@ -25,16 +25,14 @@ class StraightFineProgram extends StraightProgram {
         
         ClassLoader cl = this.getClass().getClassLoader();
         InputStream is = cl.getResourceAsStream(HEADER_FILE_NAME);
-        if ( is == null ) System.out.println( "NULL!!");
-        
         BufferedReader br = new BufferedReader( new InputStreamReader(is));
         String line;
         try {
             while ( ( line = br.readLine() ) != null ) {
-                System.out.println(line);
+                program.add(line);
             }
         } catch (IOException ex) {
-            Logger.getLogger(StraightFineProgram.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Fel vid läsning av resource : " + HEADER_FILE_NAME);
         }
     }
 }
