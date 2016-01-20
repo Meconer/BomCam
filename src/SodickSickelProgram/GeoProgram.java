@@ -6,6 +6,7 @@
 package SodickSickelProgram;
 
 import Toolpkg.Chain;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,11 +14,11 @@ import Toolpkg.Chain;
  */
 public class GeoProgram {
     
-    
-            
-    
-    private Chain chain;
+    Chain chain;
+    String fileName;
+    ArrayList<String> program = new ArrayList<>();
 
+    
     public void setChain(Chain chain) {
         this.chain = chain;
     }
