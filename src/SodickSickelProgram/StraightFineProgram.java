@@ -102,11 +102,13 @@ class StraightFineProgram extends GeoProgram {
         // Skippa första linjen
         if ( geoIter.hasNext() ) geoIter.next();
         else throw new Exception("Tom länk vid addSubSection");  // Något är fel om det inte finns någon länk här.
-        
+
         while ( geoIter.hasNext() ) {
             Geometry geo = geoIter.next();
             CNCCodeLine line = geo.geoToCNCCode(lastPoint, lastGCode);
-            program.add( line.getLine() );
+            String s = line.getLine();
+            if ( !geoIter.hasNext() ) s = "G40 H000 " + s;
+            program.add( s );
             lastGCode = line.getgCode();
             lastPoint = line.getLastPoint();
         }

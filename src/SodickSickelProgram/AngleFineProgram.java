@@ -73,14 +73,16 @@ class AngleFineProgram extends GeoProgram {
 
     private void addBackwardSection( String condition, String offset, Point nextToLastPoint) {
         program.add(condition);
-        program.add("G42 H000 G01 " + nextToLastPoint.toCNCString("X", "Y"));
+        program.add("G52 A0 G42 H000 G01 " + nextToLastPoint.toCNCString("X", "Y"));
+        program.add("A10.0");
         program.add(offset);
         program.add("M98 P0002" ) ;
     }
 
     private void addForwardSection( String condition, String offset, Point secondPoint) {
         program.add(condition);
-        program.add("G41 H000 G01 " + secondPoint.toCNCString("X", "Y"));
+        program.add("G51 A0 G41 H000 G01 " + secondPoint.toCNCString("X", "Y"));
+        program.add("A10.0");
         program.add(offset);
         program.add("M98 P0001");
     }
@@ -103,10 +105,20 @@ class AngleFineProgram extends GeoProgram {
         if ( geoIter.hasNext() ) geoIter.next();
         else throw new Exception("Tom länk vid addSubSection");  // Något är fel om det inte finns någon länk här.
         
+        boolean start = true;
         while ( geoIter.hasNext() ) {
             Geometry geo = geoIter.next();
             CNCCodeLine line = geo.geoToCNCCode(lastPoint, lastGCode);
-            program.add( line.getLine() );
+            String s = line.getLine();
+            if ( !geoIter.hasNext() ) {
+                program.add("A0.0");
+                s = "G40 H000 " + s;
+            }
+            program.add( s );
+            if ( start ) {
+                program.add("A10.0");
+                start = false;
+            }
             lastGCode = line.getgCode();
             lastPoint = line.getLastPoint();
         }

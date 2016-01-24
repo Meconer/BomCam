@@ -10,12 +10,16 @@ package SodickSickelProgram;
  * @author matsandersson
  */
 public class CutProgram extends AngleFineProgram {
-    String fileName;
 
     void build(String fileName) {
         this.fileName = fileName;
         addHeader();
         addMainProgram();
+        try {
+            addSubs();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
         
     }
   
