@@ -31,7 +31,7 @@ public class GeoProgram {
         FileChooser fc = new FileChooser();
 
         fc.setInitialFileName(fileName);
-        String currentDir = System.getProperty("user.home") + File.separator;
+        String currentDir = System.getProperty("user.home") + File.separator ;
         File file = new File(currentDir);
         fc.setInitialDirectory(file);
         //Show save file dialog

@@ -9,13 +9,19 @@ package SodickSickelProgram;
  *
  * @author Mats
  */
-public class SecondReliefProgram extends GeoProgram {
-
-    String fileName;
+public class SecondReliefProgram extends StraightProgram {
 
     void build(String fileName) {
         this.fileName = fileName;
         
+        addHeader();
+        addMainProgram();
+        try {
+            addSubs();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
     }
-    
+
+
 }

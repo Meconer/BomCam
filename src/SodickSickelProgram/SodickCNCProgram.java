@@ -42,7 +42,9 @@ public class SodickCNCProgram {
         cutProgram.build("F90S10.NC");
         cutProgram.save();
         firstReliefProgram.build("G120S5.NC");
-        secondReliefProgram.build("G120S5.NC");
+        firstReliefProgram.save();
+        secondReliefProgram.build("G150S0.NC");
+        secondReliefProgram.save();
     
     }   
     
