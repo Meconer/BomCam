@@ -85,11 +85,11 @@ public class Arc extends Geometry {
         if ( gCode != lastGCode ) {
             line += Util.gCodeToString( gCode) + " ";
         }
-        if ( Math.abs( endPoint.getxPoint() - lastPoint.getxPoint() ) > 0.00005 ) line += "X" + Util.cncRound( endPoint.getxPoint()) + " ";
-        if ( Math.abs( endPoint.getyPoint() - lastPoint.getyPoint() ) > 0.00005 ) line += "Y" + Util.cncRound( endPoint.getyPoint()) + " ";
+        if ( Math.abs( endPoint.getxPoint() - lastPoint.getxPoint() ) > 0.00005 ) line += "X" + Util.cncRound( endPoint.getxPoint(),4) + " ";
+        if ( Math.abs( endPoint.getyPoint() - lastPoint.getyPoint() ) > 0.00005 ) line += "Y" + Util.cncRound( endPoint.getyPoint(),4) + " ";
         
-        line += "I" + Util.cncRound(iValue) + " ";
-        line += "J" + Util.cncRound(jValue);
+        line += "I" + Util.cncRound(iValue,4) + " ";
+        line += "J" + Util.cncRound(jValue,4);
         
         return new CNCCodeLine(line, gCode, endPoint);
        

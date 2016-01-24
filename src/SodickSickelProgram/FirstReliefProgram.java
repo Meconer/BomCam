@@ -9,11 +9,21 @@ package SodickSickelProgram;
  *
  * @author Mats
  */
-public class FirstReliefProgram extends GeoProgram {
-    String fileName;
+public class FirstReliefProgram extends AngleProgram {
+    
+    public FirstReliefProgram() {
+        sideAngle = 5.0;
+    }
 
     void build(String fileName) {
         this.fileName = fileName;
+        addHeader();
+        addMainProgram();
+        try {
+            addSubs();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
         
     }
    

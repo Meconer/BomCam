@@ -22,11 +22,13 @@ import java.util.Iterator;
 class AngleProgram extends GeoProgram {
     
     protected Util.GCode lastGCode;
-    
     protected String headerFileName;
+    protected double sideAngle;
+    
 
     AngleProgram() {
         this.headerFileName = "SodickSickelProgram/angle6.txt";
+        sideAngle = 10.0;
     }
     
     void addHeader() {
@@ -73,7 +75,7 @@ class AngleProgram extends GeoProgram {
     protected void addForwardSection( String condition, String offset, Point secondPoint) {
         program.add(condition);
         program.add("G51 A0 G41 H000 G01 " + secondPoint.toCNCString("X", "Y"));
-        program.add("A10.0");
+        program.add( sideAngleCode() );
         program.add(offset);
         program.add("M98 P0001");
     }
@@ -107,7 +109,7 @@ class AngleProgram extends GeoProgram {
             }
             program.add( s );
             if ( start ) {
-                program.add("A10.0");
+                program.add(sideAngleCode());
                 start = false;
             }
             lastGCode = line.getgCode();
@@ -115,5 +117,9 @@ class AngleProgram extends GeoProgram {
         }
         program.add("M99");
         
+    }
+
+    protected String sideAngleCode() {
+        return "A"+Util.cncRound( sideAngle, 1 );
     }
 }

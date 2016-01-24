@@ -58,10 +58,11 @@ public class Util {
         
     }
     
-    // Rounds the double value to 4 decimals
-    public static String cncRound(double value) {
-        
-        DecimalFormat df = new DecimalFormat("0.0###");
+    // Rounds the double value to n decimals
+    public static String cncRound(double value, int n) {
+        String format = "0.0" ;
+        for ( int i = 1; i<n; i++ ) format += "#";
+        DecimalFormat df = new DecimalFormat(format);
         df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
         try {
             String s = df.format(value);

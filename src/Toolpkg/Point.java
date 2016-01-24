@@ -6,7 +6,6 @@
 package Toolpkg;
 
 import SodickSickelProgram.CNCCodeLine;
-import static Toolpkg.Util.cncRound;
 
 /**
  *
@@ -40,7 +39,7 @@ public class Point extends Geometry {
     }
 
     public String toCNCString(String pref1, String pref2) {
-        String s = pref1 + cncRound( xPoint ) + " " + pref2 + cncRound( yPoint );
+        String s = pref1 + Util.cncRound( xPoint, 4 ) + " " + pref2 + Util.cncRound( yPoint, 4 );
         return s;
     }
 

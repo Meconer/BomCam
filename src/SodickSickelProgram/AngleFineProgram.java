@@ -52,7 +52,7 @@ class AngleFineProgram extends AngleProgram {
     protected void addBackwardSection( String condition, String offset, Point nextToLastPoint) {
         program.add(condition);
         program.add("G52 A0 G42 H000 G01 " + nextToLastPoint.toCNCString("X", "Y"));
-        program.add("A10.0");
+        program.add(sideAngleCode());
         program.add(offset);
         program.add("M98 P0002" ) ;
     }

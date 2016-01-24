@@ -61,10 +61,10 @@ public class Line extends Geometry {
             addSpace = " ";
         }
         if ( Math.abs( xEnd - lastPoint.getxPoint() ) > 0.00008 ) {
-            line += addSpace + "X" + Util.cncRound( xEnd);
+            line += addSpace + "X" + Util.cncRound( xEnd, 4);
             addSpace = " ";
         }
-        if ( Math.abs( yEnd - lastPoint.getyPoint() ) > 0.00008 ) line += addSpace + "Y" + Util.cncRound( yEnd);
+        if ( Math.abs( yEnd - lastPoint.getyPoint() ) > 0.00008 ) line += addSpace + "Y" + Util.cncRound( yEnd, 4);
         
         return new CNCCodeLine(line, Util.GCode.G01, new Point( xEnd,yEnd ) );
     }
