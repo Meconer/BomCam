@@ -45,7 +45,7 @@ public class PartedBlank extends Blank {
         partingChain.add(new Line(xStart, -stockRadius, halfLength.get() - cornDist + Math.sqrt(2) , -2 + Math.sqrt(2)));
         
         // R2 vid övergången
-        partingChain.add(new Arc(halfLength.get() - cornDist, -2, 2, 45, 90 ) );
+        partingChain.add(new Arc(halfLength.get() - cornDist, -2, 2, 45, 90, Util.ArcDirection.CCW ) );
         
         // Horisontell linje till spetsen
         partingChain.add(new Line( halfLength.get() - cornDist, 0, 0, 0 ));

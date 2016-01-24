@@ -167,7 +167,7 @@ public class Bom {
         // Nosradien
         double centerX = noseRadius.get();
         double centerY = -radiusAtTip.get() + noseRadius.get();
-        cutGeoChain.add(new Arc( centerX, centerY, noseRadius.get(), 280, 180));
+        cutGeoChain.add(new Arc( centerX, centerY, noseRadius.get(), 280, 180, Util.ArcDirection.CW));
         
         // Raksträcka för plansvarvning som angivet.
         double endOfFront = -radiusAtTip.get() + straightFrontLength.get();

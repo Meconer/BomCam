@@ -5,11 +5,44 @@
  */
 package Toolpkg;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 /**
  *
  * @author Mats
  */
-class Util {
+public class Util {
+
+    static String gCodeToString(GCode gCode) {
+        String s;
+        switch (gCode) {
+            case G01 :
+                s = "G01";
+                break;
+            case G02 : 
+                s = "G02";
+                break;
+            case G03 : 
+                s = "G02";
+                break;
+            default:
+                s = "";
+                break;
+        }
+        return s;
+    }
+    
+    public enum GCode  {
+        G01, G02, G03
+    }
+    
+    public enum ArcDirection {
+        CW, CCW
+    }
+    
+
 
     static double checkDouble(double origDouble, String newText ) {
         try {
@@ -24,5 +57,19 @@ class Util {
         return string.length() - string.replace(value, "").length();
         
     }
+    
+    // Rounds the double value to 4 decimals
+    public static String cncRound(double value) {
+        
+        DecimalFormat df = new DecimalFormat("0.0###");
+        df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+        try {
+            String s = df.format(value);
+            return s;
+        } catch (Exception e) {
+            return "cncRound Error";
+        }
+    }
+
     
 }

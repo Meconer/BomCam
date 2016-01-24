@@ -1,9 +1,5 @@
 package SodickSickelProgram;
 
-import Toolpkg.Chain;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,8 +13,12 @@ public class PartProgram extends StraightFineProgram {
         this.fileName = fileName;
         
         addHeader();
+        addMainProgram();
+        try {
+            addSubs();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
     }
-    
-    
-    
+
 }

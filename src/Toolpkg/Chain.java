@@ -11,24 +11,24 @@ import java.util.Iterator;
  */
 public class Chain {
 
-    ArrayList<Geometry> list;
+    ArrayList<Geometry> chainList;
 
     public Chain() {
-        list = new ArrayList<>();
+        chainList = new ArrayList<>();
     }
     
     public void add( Geometry geo ) {
-        list.add(geo);
+        chainList.add(geo);
     }
     
     public Iterator<Geometry> getIterator() {
-        return list.iterator();
+        return chainList.iterator();
     }
     
     public void saveChainToDXF() {
         DxfFile dxfFile = new DxfFile();
         dxfFile.addHeader();
-        for ( Iterator<Geometry> it = list.iterator() ; it.hasNext(); ) {
+        for ( Iterator<Geometry> it = chainList.iterator() ; it.hasNext(); ) {
             Geometry geo = it.next();
             if ( geo instanceof Line ) {
                 Point2D.Double startPoint = new Point2D.Double( ((Line) geo).getxStart(), ((Line) geo).getyStart());
@@ -50,5 +50,36 @@ public class Chain {
         
         dxfFile.saveFile();
     }
+
+    public Point getStartPoint() {
+        if ( chainList.isEmpty() ) return null;
+        return chainList.get(0).getStartPoint();
+    }
+
+    public Point getSecondPoint() {
+        if ( chainList.isEmpty() ) return null;
+        return chainList.get(0).getEndPoint();
+    }
+
+    public Point getLastPoint() {
+        if ( chainList.isEmpty() ) return null;
+        return chainList.get( chainList.size()-1).getEndPoint();
+    }
+
+    public Point getNextToLastPoint() {
+        if ( chainList.isEmpty() ) return null;
+        return chainList.get( chainList.size()-1).getStartPoint();
+    }
     
+    public Chain getReversedChain() {
+        Chain reversedChain = new Chain();
+        
+        for ( int i = chainList.size()-1 ;  i >= 0 ; i-- ) {
+            Geometry geo = chainList.get(i);
+            if ( geo instanceof Line ) reversedChain.add( ( (Line) geo).getReversedLine() );
+            if ( geo instanceof Arc ) reversedChain.add(  ((Arc) geo).getReversedArc() );
+        }
+        
+        return reversedChain;
+    }
 }

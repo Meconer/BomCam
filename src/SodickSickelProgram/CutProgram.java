@@ -9,11 +9,13 @@ package SodickSickelProgram;
  *
  * @author matsandersson
  */
-public class CutProgram extends GeoProgram {
+public class CutProgram extends AngleFineProgram {
     String fileName;
 
     void build(String fileName) {
         this.fileName = fileName;
+        addHeader();
+        addMainProgram();
         
     }
   

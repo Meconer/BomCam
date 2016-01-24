@@ -19,11 +19,11 @@ import java.util.Iterator;
  *
  * @author Mats
  */
-class StraightFineProgram extends GeoProgram {
+class AngleFineProgram extends GeoProgram {
     
     private Util.GCode lastGCode;
     
-    private final static String HEADER_FILE_NAME = "SodickSickelProgram/straight6.txt";
+    private final static String HEADER_FILE_NAME = "SodickSickelProgram/angle6.txt";
     
     void addHeader() {
         

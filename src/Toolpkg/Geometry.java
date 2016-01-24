@@ -1,15 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Toolpkg;
+
+import SodickSickelProgram.CNCCodeLine;
+import Toolpkg.Util;
 
 /**
  *
  * @author Mats
  */
-public class Geometry {
+public abstract class Geometry {
 
+    public abstract Point getStartPoint();
+    public abstract Point getEndPoint();
+
+    public abstract CNCCodeLine geoToCNCCode(Point lastPoint, Util.GCode lastGCode);
+    
     
 }
