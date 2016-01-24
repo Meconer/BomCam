@@ -32,8 +32,6 @@ public class SodickCNCProgram {
         cutProgram.setChain(cutGeoChain);
         firstReliefProgram.setChain(firstReleifChain);
         secondReliefProgram.setChain(secondReliefChain);
-        
-        
     }
     
     public void buildProgram() {
@@ -45,8 +43,17 @@ public class SodickCNCProgram {
         firstReliefProgram.save();
         secondReliefProgram.build("G150S0.NC");
         secondReliefProgram.save();
-    
+        mainProgram.build("MAINS.NC");
+        mainProgram.save();
     }   
+
+    public void setStockDia(double stockDia) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setFirstTiltMeasurePoint(double d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
        
 }

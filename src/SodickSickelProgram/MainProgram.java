@@ -9,6 +9,13 @@ package SodickSickelProgram;
  *
  * @author Mats
  */
-class MainProgram {
+class MainProgram extends CNCProgram {
     
+    public void build(String fileName ) {
+        this.fileName = fileName;
+        
+        program.add("( SICKEL ) ");
+        program.add("G56");
+        program.add("");
+    }
 }

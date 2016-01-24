@@ -202,6 +202,8 @@ public class Sickel {
         
         SodickCNCProgram program = new SodickCNCProgram();
         program.setChains( partChain, cutGeoChain, firstReleifChain, secondReliefChain );
+        program.setStockDia( partedBlank.getStockDia());
+        program.setFirstTiltMeasurePoint( partedBlank.getHalfLength() + partedBlank.getStockDia() / 2 + 1.0 );
         program.buildProgram();
     }
     
