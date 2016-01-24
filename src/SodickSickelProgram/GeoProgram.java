@@ -39,7 +39,7 @@ public class GeoProgram {
 
         if (file != null) {
             try {
-                FileWriter fileWriter = null;
+                FileWriter fileWriter;
 
                 fileWriter = new FileWriter(file);
                 Iterator<String> pIter = program.iterator();
@@ -50,7 +50,8 @@ public class GeoProgram {
 
                 fileWriter.close();
             } catch (IOException ex) {
-                System.out.println(" Kan inte spara filen " + fileName);
+                System.err.println(" Kan inte spara filen " + fileName);
+                System.err.println(ex.getMessage());
             }
 
         }

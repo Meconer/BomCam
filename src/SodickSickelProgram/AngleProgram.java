@@ -19,14 +19,14 @@ import java.util.Iterator;
  *
  * @author Mats
  */
-class StraightProgram extends GeoProgram {
+class AngleProgram extends GeoProgram {
     
     protected Util.GCode lastGCode;
     
     protected String headerFileName;
 
-    StraightProgram() {
-        this.headerFileName = "SodickSickelProgram/straight1.txt";
+    AngleProgram() {
+        this.headerFileName = "SodickSickelProgram/angle6.txt";
     }
     
     void addHeader() {
@@ -72,7 +72,8 @@ class StraightProgram extends GeoProgram {
 
     protected void addForwardSection( String condition, String offset, Point secondPoint) {
         program.add(condition);
-        program.add("G41 H000 G01 " + secondPoint.toCNCString("X", "Y"));
+        program.add("G51 A0 G41 H000 G01 " + secondPoint.toCNCString("X", "Y"));
+        program.add("A10.0");
         program.add(offset);
         program.add("M98 P0001");
     }
@@ -94,13 +95,21 @@ class StraightProgram extends GeoProgram {
         // Skippa första linjen
         if ( geoIter.hasNext() ) geoIter.next();
         else throw new Exception("Tom länk vid addSubSection");  // Något är fel om det inte finns någon länk här.
-
+        
+        boolean start = true;
         while ( geoIter.hasNext() ) {
             Geometry geo = geoIter.next();
             CNCCodeLine line = geo.geoToCNCCode(lastPoint, lastGCode);
             String s = line.getLine();
-            if ( !geoIter.hasNext() ) s = "G40 H000 " + s;
+            if ( !geoIter.hasNext() ) {
+                program.add("A0.0");
+                s = "G40 H000 " + s;
+            }
             program.add( s );
+            if ( start ) {
+                program.add("A10.0");
+                start = false;
+            }
             lastGCode = line.getgCode();
             lastPoint = line.getLastPoint();
         }

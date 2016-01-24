@@ -19,43 +19,21 @@ import java.util.Iterator;
  *
  * @author Mats
  */
-class AngleFineProgram extends GeoProgram {
+class AngleFineProgram extends AngleProgram {
     
-    private Util.GCode lastGCode;
-    
-    private final static String HEADER_FILE_NAME = "SodickSickelProgram/angle6.txt";
-    
-    void addHeader() {
-        
-        ClassLoader cl = this.getClass().getClassLoader();
-        InputStream is = cl.getResourceAsStream(HEADER_FILE_NAME);
-        BufferedReader br = new BufferedReader( new InputStreamReader(is));
-        String line;
-        try {
-            while ( ( line = br.readLine() ) != null ) {
-                program.add(line);
-            }
-        } catch (IOException ex) {
-            System.err.println("Fel vid läsning av resource : " + HEADER_FILE_NAME);
-        }
+    AngleFineProgram() {
+        this.headerFileName = "SodickSickelProgram/angle6.txt";
     }
     
-    void addMainProgram( ) {
-        Point startPoint = chain.getStartPoint();
-        Point secondPoint = chain.getSecondPoint();
-        Point lastPoint = chain.getLastPoint();
-        Point nextToLastPoint = chain.getNextToLastPoint();
-        
-        buildMain( startPoint, secondPoint, lastPoint, nextToLastPoint );
-    }
-    
+    @Override
     void addSubs() throws Exception {
         
         addSubSection( chain, "N0001");
         addSubSection( chain.getReversedChain(), "N0002");
     }
 
-    private void buildMain(Point startPoint, Point secondPoint, Point lastPoint, Point nextToLastPoint) {
+    @Override
+    protected void buildMain(Point startPoint, Point secondPoint, Point lastPoint, Point nextToLastPoint) {
         program.add("G92 " + startPoint.toCNCString( "X", "Y"));
         program.add("G29");
         program.add("T94");
@@ -71,7 +49,7 @@ class AngleFineProgram extends GeoProgram {
         program.add("M199");
     }
 
-    private void addBackwardSection( String condition, String offset, Point nextToLastPoint) {
+    protected void addBackwardSection( String condition, String offset, Point nextToLastPoint) {
         program.add(condition);
         program.add("G52 A0 G42 H000 G01 " + nextToLastPoint.toCNCString("X", "Y"));
         program.add("A10.0");
@@ -79,50 +57,4 @@ class AngleFineProgram extends GeoProgram {
         program.add("M98 P0002" ) ;
     }
 
-    private void addForwardSection( String condition, String offset, Point secondPoint) {
-        program.add(condition);
-        program.add("G51 A0 G41 H000 G01 " + secondPoint.toCNCString("X", "Y"));
-        program.add("A10.0");
-        program.add(offset);
-        program.add("M98 P0001");
-    }
-
-    private void addSubSection(Chain chainToCode, String subNumber) throws Exception {
-        // Början på underprogrammet
-        program.add("");
-        program.add(subNumber);
-        lastGCode = Util.GCode.G01;
-        
-        // Spara nuvarande position vilket är den andra punkten eftersom huvudprogrammet
-        // redan har gått dit.
-        Point lastPoint = chainToCode.getSecondPoint();  
-        
-        // Gå igenom hela länken men hoppa över första punkten som är använd
-        // i huvudprogrammet.
-        Iterator<Geometry> geoIter = chainToCode.getIterator();
-        
-        // Skippa första linjen
-        if ( geoIter.hasNext() ) geoIter.next();
-        else throw new Exception("Tom länk vid addSubSection");  // Något är fel om det inte finns någon länk här.
-        
-        boolean start = true;
-        while ( geoIter.hasNext() ) {
-            Geometry geo = geoIter.next();
-            CNCCodeLine line = geo.geoToCNCCode(lastPoint, lastGCode);
-            String s = line.getLine();
-            if ( !geoIter.hasNext() ) {
-                program.add("A0.0");
-                s = "G40 H000 " + s;
-            }
-            program.add( s );
-            if ( start ) {
-                program.add("A10.0");
-                start = false;
-            }
-            lastGCode = line.getgCode();
-            lastPoint = line.getLastPoint();
-        }
-        program.add("M99");
-        
-    }
 }

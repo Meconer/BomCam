@@ -6,7 +6,6 @@
 package SodickSickelProgram;
 
 import Toolpkg.Point;
-import Toolpkg.Util;
 
 /**
  *
@@ -33,6 +32,13 @@ class StraightFineProgram extends StraightProgram {
         addForwardSection("C902","H005", secondPoint);
         addBackwardSection("C903", "H006", nextToLastPoint);
         program.add("M199");
+    }
+
+    @Override
+    void addSubs() throws Exception {
+        
+        addSubSection( chain, "N0001");
+        addSubSection( chain.getReversedChain(), "N0002");
     }
 
     private void addBackwardSection( String condition, String offset, Point nextToLastPoint) {
