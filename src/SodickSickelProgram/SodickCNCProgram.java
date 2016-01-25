@@ -12,6 +12,10 @@ import Toolpkg.Chain;
  * @author Mats
  */
 public class SodickCNCProgram {
+    
+    private final double stockDia;
+    private final double firstTiltMeasurePoint;
+    
     private final MainProgram mainProgram;
     private final CutProgram cutProgram;
     private final PartProgram partProgram;
@@ -19,12 +23,14 @@ public class SodickCNCProgram {
     private final SecondReliefProgram secondReliefProgram;
     
 
-    public SodickCNCProgram() {
-        mainProgram = new MainProgram();
+    public SodickCNCProgram(double stockDia, double firstTiltMeasurePoint) {
+        mainProgram = new MainProgram( stockDia, firstTiltMeasurePoint );
         cutProgram = new CutProgram();
         partProgram = new PartProgram();
         firstReliefProgram = new FirstReliefProgram();
         secondReliefProgram = new SecondReliefProgram();
+        this.stockDia = stockDia;
+        this.firstTiltMeasurePoint = firstTiltMeasurePoint;
     }
 
     public void setChains(Chain partChain, Chain cutGeoChain, Chain firstReleifChain, Chain secondReliefChain) {
@@ -47,13 +53,5 @@ public class SodickCNCProgram {
         mainProgram.save();
     }   
 
-    public void setStockDia(double stockDia) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setFirstTiltMeasurePoint(double d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
        
 }

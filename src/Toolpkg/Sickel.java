@@ -200,10 +200,9 @@ public class Sickel {
 //        firstReleifChain.saveChainToDXF();
 //        secondReliefChain.saveChainToDXF();
         
-        SodickCNCProgram program = new SodickCNCProgram();
+        SodickCNCProgram program = new SodickCNCProgram(partedBlank.getStockDia(),
+            partedBlank.getHalfLength() + partedBlank.getStockDia() / 2 + 1.0);
         program.setChains( partChain, cutGeoChain, firstReleifChain, secondReliefChain );
-        program.setStockDia( partedBlank.getStockDia());
-        program.setFirstTiltMeasurePoint( partedBlank.getHalfLength() + partedBlank.getStockDia() / 2 + 1.0 );
         program.buildProgram();
     }
     
