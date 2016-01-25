@@ -38,6 +38,7 @@ public class SodickCNCProgram {
         cutProgram.setChain(cutGeoChain);
         firstReliefProgram.setChain(firstReleifChain);
         secondReliefProgram.setChain(secondReliefChain);
+        mainProgram.setChains( partChain, cutGeoChain, firstReleifChain, secondReliefChain );
     }
     
     public void buildProgram() {
@@ -47,7 +48,7 @@ public class SodickCNCProgram {
         cutProgram.save();
         firstReliefProgram.build("G120S5.NC");
         firstReliefProgram.save();
-        secondReliefProgram.build("G150S0.NC");
+        secondReliefProgram.build("G150S0N5.NC");
         secondReliefProgram.save();
         mainProgram.build("MAINS.NC");
         mainProgram.save();
