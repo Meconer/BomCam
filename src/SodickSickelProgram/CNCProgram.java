@@ -25,8 +25,7 @@ public class CNCProgram {
         FileChooser fc = new FileChooser();
 
         fc.setInitialFileName(fileName);
-        String currentDir = System.getProperty("user.home") + File.separator ;
-        File file = new File(currentDir);
+        File file = new File(CurrentSettings.getInstance().getCurrentDirectory());
         fc.setInitialDirectory(file);
         //Show save file dialog
         file = fc.showSaveDialog(null);
@@ -43,6 +42,8 @@ public class CNCProgram {
                 }
 
                 fileWriter.close();
+                String filePath = file.getAbsolutePath();
+                CurrentSettings.getInstance().setCurrentDirectory( filePath.substring(0, filePath.lastIndexOf(File.separator)));
             } catch (IOException ex) {
                 System.err.println(" Kan inte spara filen " + fileName);
                 System.err.println(ex.getMessage());
