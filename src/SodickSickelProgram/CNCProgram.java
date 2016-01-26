@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.prefs.Preferences;
 import javafx.stage.FileChooser;
 
 /**
@@ -20,13 +21,19 @@ public class CNCProgram {
 
     String fileName;
     ArrayList<String> program = new ArrayList<>();
+    
+    Preferences prefs = Preferences.userNodeForPackage( SodickCNCProgram.class);
 
-    public void save() {
+    public boolean save(  ) {
         FileChooser fc = new FileChooser();
 
+        File file;
         fc.setInitialFileName(fileName);
-        File file = new File(CurrentSettings.getInstance().getCurrentDirectory());
-        fc.setInitialDirectory(file);
+        String workingDir = prefs.get(Constants.DIRECTORY_PREFS_KEY, "");
+        if ( !workingDir.equals("") ) {
+            file = new File( workingDir );
+            fc.setInitialDirectory(file);
+        }
         //Show save file dialog
         file = fc.showSaveDialog(null);
 
@@ -43,12 +50,14 @@ public class CNCProgram {
 
                 fileWriter.close();
                 String filePath = file.getAbsolutePath();
-                CurrentSettings.getInstance().setCurrentDirectory( filePath.substring(0, filePath.lastIndexOf(File.separator)));
+                prefs.put(Constants.DIRECTORY_PREFS_KEY, filePath.substring(0, filePath.lastIndexOf(File.separator)));
+                return true;
             } catch (IOException ex) {
                 System.err.println(" Kan inte spara filen " + fileName);
                 System.err.println(ex.getMessage());
             }
 
         }
+        return false;
     }
 }

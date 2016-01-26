@@ -12,10 +12,7 @@ import Toolpkg.Chain;
  * @author Mats
  */
 public class SodickCNCProgram {
-    
-    private final double stockDia;
-    private final double firstTiltMeasurePoint;
-    
+
     private final MainProgram mainProgram;
     private final CutProgram cutProgram;
     private final PartProgram partProgram;
@@ -29,8 +26,6 @@ public class SodickCNCProgram {
         partProgram = new PartProgram();
         firstReliefProgram = new FirstReliefProgram();
         secondReliefProgram = new SecondReliefProgram();
-        this.stockDia = stockDia;
-        this.firstTiltMeasurePoint = firstTiltMeasurePoint;
     }
 
     public void setChains(Chain partChain, Chain cutGeoChain, Chain firstReleifChain, Chain secondReliefChain) {
@@ -43,16 +38,15 @@ public class SodickCNCProgram {
     
     public void buildProgram() {
         partProgram.build("F0S0.NC");
-        partProgram.save();
+        if (!partProgram.save( )) return;
         cutProgram.build("F90S10.NC");
-        cutProgram.chain.saveChainToDXF();
-        cutProgram.save();
+        if (!cutProgram.save()) return;
         firstReliefProgram.build("G120S5.NC");
-        firstReliefProgram.save();
+        if (!firstReliefProgram.save()) return;
         secondReliefProgram.build("G150S0N5.NC");
-        secondReliefProgram.save();
+        if (!secondReliefProgram.save()) return;
         mainProgram.build("MAINS.NC");
-        mainProgram.save();
+        if (!mainProgram.save()) return;
     }   
 
        
