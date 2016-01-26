@@ -1,8 +1,5 @@
 package SodickSickelProgram;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Program för att representera ett program för att dela ämnet på hälften.
  * @author Mats

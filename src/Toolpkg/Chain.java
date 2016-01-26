@@ -28,8 +28,7 @@ public class Chain {
     public void saveChainToDXF() {
         DxfFile dxfFile = new DxfFile();
         dxfFile.addHeader();
-        for ( Iterator<Geometry> it = chainList.iterator() ; it.hasNext(); ) {
-            Geometry geo = it.next();
+        for (Geometry geo : chainList) {
             if ( geo instanceof Line ) {
                 Point2D.Double startPoint = new Point2D.Double( ((Line) geo).getxStart(), ((Line) geo).getyStart());
                 Point2D.Double endPoint = new Point2D.Double( ((Line) geo).getxEnd(), ((Line) geo).getyEnd());

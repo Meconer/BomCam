@@ -106,7 +106,7 @@ class MainProgram extends CNCProgram {
             program.add("( OP3 SLAEPP 1 B-120 ) ");
             program.add("G00 Y" + Util.cncRound(firstReleifChain.getStartPoint().getyPoint(), 4));
             program.add("X" + Util.cncRound(firstReleifChain.getStartPoint().getxPoint(), 4));
-            program.add("QF120S5()");
+            program.add("QG120S5()");
             program.add("G56");
             program.add("G00 X-1.0");
             program.add("");
@@ -133,6 +133,7 @@ class MainProgram extends CNCProgram {
             program.add("QG150S0N5()");
             program.add("G56");
             program.add("G00 X-1.0");
+            program.add("M99");
             program.add("");
         } else {
             program.add("secondReliefChain är null");

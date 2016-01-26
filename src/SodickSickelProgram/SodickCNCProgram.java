@@ -45,6 +45,7 @@ public class SodickCNCProgram {
         partProgram.build("F0S0.NC");
         partProgram.save();
         cutProgram.build("F90S10.NC");
+        cutProgram.chain.saveChainToDXF();
         cutProgram.save();
         firstReliefProgram.build("G120S5.NC");
         firstReliefProgram.save();

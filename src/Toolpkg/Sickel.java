@@ -111,11 +111,16 @@ public class Sickel {
         // Till centrum
         cutGeoChain.add(new Line( 0, -tipRadius, 0, 0 ) );
         
-        // 15 grader snett till 2*tipRadius och sedan till vänster
+        // 10 grader snett till 2*tipRadius, rakt fram till 4*tipRadius och sedan till vänster
         double yNext = tipRadius * 2;
-        double xNext = yNext * Math.tan( Math.toRadians(15) );
+        double xNext = yNext * Math.tan( Math.toRadians(10) );
         cutGeoChain.add(new Line( 0, 0, xNext, yNext ));
-        cutGeoChain.add(new Line( xNext, yNext, 0, yNext ));
+        double yLast = yNext;
+        double xLast = xNext;
+        yNext = tipRadius * 4;
+        
+        cutGeoChain.add(new Line( xLast, yLast, xLast, yNext ));
+        cutGeoChain.add(new Line( xLast, yNext, 0, yNext ));
         
         // 2 startsträckor
         cutGeoChain.add( new Line(0, yNext, -Constants.START_LENGTH, yNext));

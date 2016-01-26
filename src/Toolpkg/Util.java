@@ -25,7 +25,7 @@ public class Util {
                 s = "G02";
                 break;
             case G03 : 
-                s = "G02";
+                s = "G03";
                 break;
             default:
                 s = "";

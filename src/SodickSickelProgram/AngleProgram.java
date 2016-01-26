@@ -105,7 +105,7 @@ class AngleProgram extends GeoProgram {
             String s = line.getLine();
             if ( !geoIter.hasNext() ) {
                 program.add("A0.0");
-                s = "G40 H000 " + s;
+                s = "G50 G40 H000 " + s;
             }
             program.add( s );
             if ( start ) {
