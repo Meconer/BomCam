@@ -1,6 +1,7 @@
 
 package SickelCam;
 
+import Settings.ProgramSettings;
 import Toolpkg.Sickel;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,9 +37,18 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void calculateCutGeo(ActionEvent event) {
-        
         sickel.calculate();
-        
+    }
+    
+    @FXML
+    void closeProgram() {
+        System.exit(0);
+    }
+    
+    @FXML
+    void openSettingsDialog() {
+        Settings.ProgramSettings ps = new ProgramSettings();
+        ps.showSettingsDialog();
     }
     
     @Override
