@@ -8,6 +8,8 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
@@ -45,7 +47,9 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    void openSettingsDialog() {
+    void aboutBox() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "SickelCam 0.1 by Mats Andersson", ButtonType.OK);
+        alert.showAndWait();
     }
     
     @Override
