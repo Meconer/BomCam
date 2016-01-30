@@ -44,17 +44,12 @@ public class FXMLDocumentController implements Initializable {
     private TextField straightFrontLength;
 
     @FXML
-    void calculateCutGeo(ActionEvent event) {
+    void calculate(ActionEvent event) {
         
-        bom.calculateCutGeo();
+        bom.calculate();
         
     }
     
-    @FXML
-    private void calculateParting(ActionEvent event) {
-        bom.calculateParting();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         bom = new Bom();

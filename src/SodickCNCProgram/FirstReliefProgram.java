@@ -3,17 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SodickSickelProgram;
+package SodickCNCProgram;
 
 /**
  *
  * @author Mats
  */
-public class SecondReliefProgram extends StraightProgram {
+public class FirstReliefProgram extends AngleProgram {
+    
+    public FirstReliefProgram() {
+        sideAngle = 5.0;
+    }
 
-    void build(String fileName) {
+    public void build(String fileName) {
         this.fileName = fileName;
-        
         addHeader();
         addMainProgram();
         try {
@@ -21,7 +24,7 @@ public class SecondReliefProgram extends StraightProgram {
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
+        
     }
-
-
+   
 }

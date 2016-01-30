@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SodickSickelProgram;
+package SodickCNCProgram;
 
+
+import SodickBomProgram.BomSodickCNCProgram;
+import SodickBomProgram.Constants;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,10 +22,10 @@ import javafx.stage.FileChooser;
  */
 public class CNCProgram {
 
-    String fileName;
-    ArrayList<String> program = new ArrayList<>();
+    protected String fileName;
+    protected ArrayList<String> program = new ArrayList<>();
     
-    Preferences prefs = Preferences.userNodeForPackage( SodickCNCProgram.class);
+    Preferences prefs = Preferences.userNodeForPackage( BomSodickCNCProgram.class);
 
     public boolean save(  ) {
         FileChooser fc = new FileChooser();

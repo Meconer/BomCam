@@ -5,13 +5,17 @@
  */
 package SodickSickelProgram;
 
+import SodickCNCProgram.SecondReliefProgram;
+import SodickCNCProgram.FirstReliefProgram;
+import SodickCNCProgram.CutProgram;
+import SodickCNCProgram.PartProgram;
 import Toolpkg.Chain;
 
 /**
  *
  * @author Mats
  */
-public class SodickCNCProgram {
+public class SickelSodickCNCProgram {
 
     private final MainProgram mainProgram;
     private final CutProgram cutProgram;
@@ -20,7 +24,7 @@ public class SodickCNCProgram {
     private final SecondReliefProgram secondReliefProgram;
     
 
-    public SodickCNCProgram(double stockDia, double firstTiltMeasurePoint) {
+    public SickelSodickCNCProgram(double stockDia, double firstTiltMeasurePoint) {
         mainProgram = new MainProgram( stockDia, firstTiltMeasurePoint );
         cutProgram = new CutProgram();
         partProgram = new PartProgram();

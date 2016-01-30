@@ -186,6 +186,10 @@ public class Bom {
         
     }
 
+    public void calculate() {
+        
+    }
+
         
         
     

@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SodickSickelProgram;
+package SodickCNCProgram;
+
+import SodickSickelProgram.*;
 
 /**
  *
- * @author Mats
+ * @author matsandersson
  */
-public class FirstReliefProgram extends AngleProgram {
-    
-    public FirstReliefProgram() {
-        sideAngle = 5.0;
-    }
+public class CutProgram extends AngleFineProgram {
 
-    void build(String fileName) {
+    public void build(String fileName) {
         this.fileName = fileName;
         addHeader();
         addMainProgram();
@@ -26,5 +24,5 @@ public class FirstReliefProgram extends AngleProgram {
         }
         
     }
-   
+  
 }

@@ -1,4 +1,4 @@
-package SodickSickelProgram;
+package SodickCNCProgram;
 
 /**
  * Program för att representera ett program för att dela ämnet på hälften.
@@ -6,7 +6,7 @@ package SodickSickelProgram;
  */
 public class PartProgram extends StraightFineProgram {
     
-    void build(String fileName) {
+    public void build(String fileName) {
         this.fileName = fileName;
         
         addHeader();

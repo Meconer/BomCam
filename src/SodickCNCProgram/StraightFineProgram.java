@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SodickSickelProgram;
+package SodickCNCProgram;
 
 import Toolpkg.Point;
 
@@ -11,19 +11,12 @@ import Toolpkg.Point;
  *
  * @author Mats
  */
-class AngleFineProgram extends AngleProgram {
+class StraightFineProgram extends StraightProgram {
     
-    AngleFineProgram() {
-        this.headerFileName = "SodickSickelProgram/angle6.txt";
+    StraightFineProgram() {
+        this.headerFileName = "SodickSickelProgram/straight6.txt";
     }
     
-    @Override
-    void addSubs() throws Exception {
-        
-        addSubSection( chain, "N0001");
-        addSubSection( chain.getReversedChain(), "N0002");
-    }
-
     @Override
     protected void buildMain(Point startPoint, Point secondPoint, Point lastPoint, Point nextToLastPoint) {
         program.add("G92 " + startPoint.toCNCString( "X", "Y"));
@@ -41,12 +34,17 @@ class AngleFineProgram extends AngleProgram {
         program.add("M199");
     }
 
-    protected void addBackwardSection( String condition, String offset, Point nextToLastPoint) {
+    @Override
+    void addSubs() throws Exception {
+        
+        addSubSection( chain, "N0001");
+        addSubSection( chain.getReversedChain(), "N0002");
+    }
+
+    private void addBackwardSection( String condition, String offset, Point nextToLastPoint) {
         program.add(condition);
-        program.add("G52 A0 G42 H000 G01 " + nextToLastPoint.toCNCString("X", "Y"));
-        program.add(sideAngleCode());
+        program.add("G42 H000 G01 " + nextToLastPoint.toCNCString("X", "Y"));
         program.add(offset);
         program.add("M98 P0002" ) ;
     }
-
 }
