@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
  *
  * @author Mats
  */
-class MainProgram extends CNCProgram {
+class BomMainProgram extends CNCProgram {
 
     private final double stockDia;
     private final double firstTiltMeasurePoint;
@@ -28,7 +28,7 @@ class MainProgram extends CNCProgram {
 
     private final String subsFileName = "SodickSickelProgram/mainend.txt";
 
-    public MainProgram(double stockDia, double firstTiltMeasurePoint) {
+    public BomMainProgram(double stockDia, double firstTiltMeasurePoint) {
         this.stockDia = stockDia;
         this.firstTiltMeasurePoint = firstTiltMeasurePoint;
     }

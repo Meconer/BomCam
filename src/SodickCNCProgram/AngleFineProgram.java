@@ -16,7 +16,7 @@ import Toolpkg.Point;
 class AngleFineProgram extends AngleProgram {
     
     AngleFineProgram() {
-        this.headerFileName = "SodickSickelProgram/angle6.txt";
+        this.headerFileName = "SodickCNCProgram/angle6.txt";
     }
     
     @Override

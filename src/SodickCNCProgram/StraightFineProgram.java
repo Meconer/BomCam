@@ -14,7 +14,7 @@ import Toolpkg.Point;
 class StraightFineProgram extends StraightProgram {
     
     StraightFineProgram() {
-        this.headerFileName = "SodickSickelProgram/straight6.txt";
+        this.headerFileName = "SodickCNCProgram/straight6.txt";
     }
     
     @Override

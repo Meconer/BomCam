@@ -6,7 +6,7 @@
 package SodickCNCProgram;
 
 
-import SodickBomProgram.BomSodickCNCProgram;
+import SodickBomProgram.BomProgram;
 import SodickBomProgram.Constants;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,7 +25,7 @@ public class CNCProgram {
     protected String fileName;
     protected ArrayList<String> program = new ArrayList<>();
     
-    Preferences prefs = Preferences.userNodeForPackage( BomSodickCNCProgram.class);
+    Preferences prefs = Preferences.userNodeForPackage(BomProgram.class);
 
     public boolean save(  ) {
         FileChooser fc = new FileChooser();

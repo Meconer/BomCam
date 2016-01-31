@@ -2,7 +2,6 @@
 package Toolpkg;
 
 import SodickCNCProgram.CNCCodeLine;
-import Toolpkg.Util;
 
 /**
  *

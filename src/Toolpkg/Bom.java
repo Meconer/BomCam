@@ -1,7 +1,7 @@
 
 package Toolpkg;
 
-import Toolpkg.Chain;
+import SodickBomProgram.BomProgram;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -14,13 +14,12 @@ public class Bom {
     private final PartedBlank partedBlank;            // Delat runt ämne med längd och dia delat på hälften
     
     private final DoubleProperty noseRadius;          // Spetsens nosradie
+    private final DoubleProperty viperLength;         // Längd på viperdel
     private final DoubleProperty clearance;           // Frigång från spetsen i x-led
     private final DoubleProperty clearanceLength;     // Längd på frigång i z-led
     private final DoubleProperty radiusAtTip;         // Spetsens läge i x-led
     private final DoubleProperty straightFrontLength; // Längd på den raka delen framtill
     
-    private Chain partingChain ;
-    private Chain cutGeoChain ;
     
     private static final double START_LENGTH = 0.5;
 
@@ -32,6 +31,7 @@ public class Bom {
         clearanceLength = new SimpleDoubleProperty(10);
         radiusAtTip = new SimpleDoubleProperty(5.8);
         straightFrontLength = new SimpleDoubleProperty(6);
+        viperLength = new SimpleDoubleProperty(0.1);
     }
 
     public double getStockDia() {
@@ -80,6 +80,14 @@ public class Bom {
         return noseRadius;
     }
     
+    public double getViperLength() {
+        return viperLength.get();
+    }
+
+    public DoubleProperty getViperLengthProperty() {
+        return viperLength;
+    }
+
     public double getClearance() {
         return clearance.get();
     }
@@ -131,17 +139,15 @@ public class Bom {
     
 
     
-    public void calculateParting() {
+    public Chain calculateParting() {
 
-        partingChain = partedBlank.calculatePartingChain();
-
-        partingChain.saveChainToDXF();
+        return partedBlank.calculatePartingChain();
 
     }
 
-    public void calculateCutGeo() {
+    public Chain calculateCutGeo() {
         // Starta länken
-        cutGeoChain = new Chain();
+        Chain cutGeoChain = new Chain();
         
         // Börja med två startsträckor
         double stockRadius = partedBlank.getStockDia()/2;
@@ -150,47 +156,112 @@ public class Bom {
         cutGeoChain.add(new Line( xStart, yStart-1, xStart, yStart - 0.5 ));
         cutGeoChain.add(new Line( xStart, yStart-0.5, xStart, yStart ));
         
-        // Sedan 45 grader mot clearanceLength till frigången
+        // Sedan 45 grader mot clearanceLength till frigången med R1 mellan.
         double yClearance = - radiusAtTip.get() + clearance.get();
-        cutGeoChain.add(new Line( xStart, yStart, clearanceLength.get(), yClearance ) );
+        double r1Lengt45 = 1 / Math.sqrt(2);
+        double xNext = clearanceLength.get() + r1Lengt45 - Math.tan( Math.toRadians(22.5));
+        double yNext = yClearance - 1 + r1Lengt45;
+        cutGeoChain.add(new Line( xStart, yStart, xNext, yNext ) );
+        
+        // radien.
+        xNext = clearanceLength.get() - Math.tan(Math.toRadians(22.5));
+        yNext = yClearance;
+        double xCenter = xNext;
+        double yCenter = yNext - 1.0; // Radie 1
+        cutGeoChain.add(new Arc(xCenter, yCenter, 1.0, 45, 90, Util.ArcDirection.CCW ));
+        xStart = xNext;
+        yStart = yNext;
         
         // Frigången fram till den möter 10-graderslinjen upp till skärspetsen
         double radianAngle = Math.toRadians( 10 );
         double yLength10 = radiusAtTip.get() + yClearance - noseRadius.get() * ( 1 - Math.cos( radianAngle ) );
         double xLength10 = yLength10 / Math.tan( radianAngle );
-        double xClearStart = noseRadius.get() * ( 1 + Math.sin( radianAngle ) ) + xLength10 ;
-        cutGeoChain.add(new Line( clearanceLength.get(), yClearance, xClearStart, yClearance));
+        xNext = viperLength.get() + noseRadius.get() * ( 1 + Math.sin( radianAngle ) ) + xLength10 ;
+        cutGeoChain.add(new Line( xStart, yStart, xNext, yNext));
+        xStart = xNext;
+        yStart = yNext;
         
         // Och så 10-graderslinjen
-        cutGeoChain.add(new Line( xClearStart, yClearance, xClearStart - xLength10, yClearance - yLength10));
+        xNext = xStart - xLength10;
+        yNext = yStart - yLength10;
+        cutGeoChain.add(new Line( xStart, yStart, xNext, yNext));
         
-        // Nosradien
-        double centerX = noseRadius.get();
-        double centerY = -radiusAtTip.get() + noseRadius.get();
-        cutGeoChain.add(new Arc( centerX, centerY, noseRadius.get(), 280, 180, Util.ArcDirection.CW));
+        // Nosradien fram till viperstarten.
+        xCenter = noseRadius.get() + viperLength.get();
+        yCenter = -radiusAtTip.get() + noseRadius.get();
+        xNext = xCenter;
+        yNext = -radiusAtTip.get();
+        cutGeoChain.add(new Arc( xCenter, yCenter, noseRadius.get(), 280, 270, Util.ArcDirection.CW));
+        xStart = xNext;
+        yStart = yNext;
+        
+        // Viperdelen
+        xNext = noseRadius.get();
+        yNext = yStart;
+        cutGeoChain.add(new Line(xStart, yStart, xNext, yNext));
+        xStart = xNext;
+
+        // yCenter är samma som tidigare.
+        // Nosradien efter viperdelen.
+        xCenter = xStart;
+        xNext = 0;
+        yNext = yCenter;
+        cutGeoChain.add(new Arc(xCenter, yCenter, noseRadius.get(), 270, 180, Util.ArcDirection.CW));
+        xStart = xNext;
+        yStart = yNext;
         
         // Raksträcka för plansvarvning som angivet.
-        double endOfFront = -radiusAtTip.get() + straightFrontLength.get();
-        cutGeoChain.add(new Line(0, centerY, 0, endOfFront ));
+        xNext = 0;
+        yNext = -radiusAtTip.get() + straightFrontLength.get();
+        cutGeoChain.add(new Line(xStart, yStart, xNext, yNext ));
+        xStart = xNext;
+        yStart = yNext;
         
         // 30 grader vidare ut till ämneskanten.
-        double leftY = stockRadius - endOfFront;
-        double xEnd = leftY * Math.tan(Math.toRadians(30));
-        cutGeoChain.add( new Line( 0, endOfFront, xEnd, stockRadius ));
+        double leftY = stockRadius - yStart;
+        xNext = leftY * Math.tan(Math.toRadians(30));
+        yNext = stockRadius;
+        cutGeoChain.add( new Line( xStart, yStart, xNext, yNext ));
+        xStart = xNext;
+        yStart = yNext;
         
         // Två slutsträckor
-        cutGeoChain.add(new Line( xEnd, stockRadius, xEnd, stockRadius + START_LENGTH));
-        cutGeoChain.add(new Line( xEnd, stockRadius + START_LENGTH, xEnd, stockRadius + 2 * START_LENGTH));
+        yNext = yStart + START_LENGTH;
+        cutGeoChain.add(new Line( xStart, yStart, xStart, yNext));
+        xStart = xNext;
+        yStart = yNext;
+        yNext = yStart + START_LENGTH;
+        cutGeoChain.add(new Line( xStart, yStart, xStart, yNext));
         
-        cutGeoChain.saveChainToDXF();
+        return cutGeoChain;
         
     }
+    
+    
+    
+    private Chain calculateFirstReliefChain() {
+        return partedBlank.calculatePartingChain();
+    }
+
+    private Chain calculateSecondReliefChain() {
+        return partedBlank.calculatePartingChain();
+    }
+
+        
+
 
     public void calculate() {
-        
+        Chain partChain = calculateParting();
+        partChain.saveChainToDXF();
+        Chain cutGeoChain = calculateCutGeo();
+        cutGeoChain.saveChainToDXF();
+        Chain firstReleifChain = calculateFirstReliefChain();
+        Chain secondReliefChain = calculateSecondReliefChain();
+        BomProgram program = new BomProgram(partedBlank.getStockDia(),
+            partedBlank.getHalfLength() + partedBlank.getStockDia() / 2 + 1.0);
+        program.setChains( partChain, cutGeoChain, firstReleifChain, secondReliefChain );
+        program.buildProgram();
     }
-
-        
         
     
 

@@ -9,7 +9,7 @@ import SodickCNCProgram.CNCCodeLine;
 public class Arc extends Geometry {
     
     private final double centerX, centerY, radius, startAngle, endAngle;
-    private Util.ArcDirection direction;
+    private final Util.ArcDirection direction;
 
     public Arc(double centerX, double centerY, double radius, double startAngle, double endAngle, Util.ArcDirection direction ) {
         this.centerX = centerX;

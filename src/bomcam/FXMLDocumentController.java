@@ -32,6 +32,9 @@ public class FXMLDocumentController implements Initializable {
     private TextField noseRadius;
 
     @FXML
+    private TextField viperLength;
+
+    @FXML
     private TextField clearance;
 
     @FXML
@@ -78,6 +81,7 @@ public class FXMLDocumentController implements Initializable {
         Bindings.bindBidirectional(stockLength.textProperty(), bom.getLengthProperty(), converter );
         Bindings.bindBidirectional(halfLength.textProperty(), bom.getHalfLengthProperty(), converter );
         Bindings.bindBidirectional(noseRadius.textProperty(), bom.getNoseRadiusProperty(), converter );
+        Bindings.bindBidirectional(viperLength.textProperty(), bom.getViperLengthProperty(), converter );
         Bindings.bindBidirectional(clearance.textProperty(), bom.getClearanceProperty(), converter );
         Bindings.bindBidirectional(clearanceLength.textProperty(), bom.getClearanceLengthProperty(), converter );
         Bindings.bindBidirectional(radiusAtTip.textProperty(), bom.getRadiusAtTipProperty(), converter );

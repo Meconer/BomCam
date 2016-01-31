@@ -28,7 +28,7 @@ class AngleProgram extends GeoProgram {
     
 
     AngleProgram() {
-        this.headerFileName = "SodickSickelProgram/angle6.txt";
+        this.headerFileName = "SodickCNCProgram/angle1.txt";
         sideAngle = 10.0;
     }
     

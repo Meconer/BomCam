@@ -3,29 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SodickBomProgram;
+package SodickSickelProgram;
 
-import SodickCNCProgram.CutProgram;
-import SodickCNCProgram.FirstReliefProgram;
-import SodickCNCProgram.PartProgram;
 import SodickCNCProgram.SecondReliefProgram;
+import SodickCNCProgram.FirstReliefProgram;
+import SodickCNCProgram.CutProgram;
+import SodickCNCProgram.PartProgram;
 import Toolpkg.Chain;
 
 /**
  *
  * @author Mats
  */
-public class BomSodickCNCProgram {
+public class SickelProgram {
 
-    private final MainProgram mainProgram;
+    private final SickelMainProgram mainProgram;
     private final CutProgram cutProgram;
     private final PartProgram partProgram;
     private final FirstReliefProgram firstReliefProgram;
     private final SecondReliefProgram secondReliefProgram;
     
 
-    public BomSodickCNCProgram(double stockDia, double firstTiltMeasurePoint) {
-        mainProgram = new MainProgram( stockDia, firstTiltMeasurePoint );
+    public SickelProgram(double stockDia, double firstTiltMeasurePoint) {
+        mainProgram = new SickelMainProgram( stockDia, firstTiltMeasurePoint );
         cutProgram = new CutProgram();
         partProgram = new PartProgram();
         firstReliefProgram = new FirstReliefProgram();

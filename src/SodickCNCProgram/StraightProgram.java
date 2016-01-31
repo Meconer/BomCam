@@ -26,7 +26,7 @@ class StraightProgram extends GeoProgram {
     protected String headerFileName;
 
     StraightProgram() {
-        this.headerFileName = "SodickSickelProgram/straight1.txt";
+        this.headerFileName = "SodickCNCProgram/straight1.txt";
     }
     
     void addHeader() {
