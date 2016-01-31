@@ -5,22 +5,20 @@
  */
 package SodickCNCProgram;
 
-import SodickCNCProgram.AngleProgram;
-import SodickSickelProgram.*;
 import Toolpkg.Point;
 
 /**
  *
  * @author Mats
  */
-class AngleFineProgram extends AngleProgram {
+public class AngleFineProgram extends AngleProgram {
     
-    AngleFineProgram() {
+    public AngleFineProgram() {
         this.headerFileName = "SodickCNCProgram/angle6.txt";
     }
     
     @Override
-    void addSubs() throws Exception {
+    public void addSubs() throws Exception {
         
         addSubSection( chain, "N0001");
         addSubSection( chain.getReversedChain(), "N0002");

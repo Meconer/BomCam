@@ -35,7 +35,7 @@ class StraightFineProgram extends StraightProgram {
     }
 
     @Override
-    void addSubs() throws Exception {
+    public void addSubs() throws Exception {
         
         addSubSection( chain, "N0001");
         addSubSection( chain.getReversedChain(), "N0002");

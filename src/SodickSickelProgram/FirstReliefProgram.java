@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SodickCNCProgram;
+package SodickSickelProgram;
+
+import SodickCNCProgram.StraightProgram;
 
 /**
  *
  * @author Mats
  */
-public class FirstReliefProgram extends AngleProgram {
+public class FirstReliefProgram extends StraightProgram {
     
     public FirstReliefProgram() {
-        sideAngle = 5.0;
+        //sideAngle = 5.0;
     }
 
     public void build(String fileName) {

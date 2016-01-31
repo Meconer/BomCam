@@ -19,17 +19,17 @@ import java.util.Iterator;
  *
  * @author Mats
  */
-class StraightProgram extends GeoProgram {
+public class StraightProgram extends GeoProgram {
     
     protected Util.GCode lastGCode;
     
     protected String headerFileName;
 
-    StraightProgram() {
+    public StraightProgram() {
         this.headerFileName = "SodickCNCProgram/straight1.txt";
     }
     
-    void addHeader() {
+    public void addHeader() {
         
         ClassLoader cl = this.getClass().getClassLoader();
         InputStream is = cl.getResourceAsStream(headerFileName);
@@ -45,7 +45,7 @@ class StraightProgram extends GeoProgram {
         }
     }
     
-    void addMainProgram( ) {
+    public void addMainProgram( ) {
         Point startPoint = chain.getStartPoint();
         Point secondPoint = chain.getSecondPoint();
         Point lastPoint = chain.getLastPoint();
@@ -54,7 +54,7 @@ class StraightProgram extends GeoProgram {
         buildMain( startPoint, secondPoint, lastPoint, nextToLastPoint );
     }
     
-    void addSubs() throws Exception {
+    public void addSubs() throws Exception {
         
         addSubSection( chain, "N0001");
     }

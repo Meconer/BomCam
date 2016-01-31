@@ -20,19 +20,19 @@ import java.util.Iterator;
  *
  * @author Mats
  */
-class AngleProgram extends GeoProgram {
+public class AngleProgram extends GeoProgram {
     
     protected Util.GCode lastGCode;
     protected String headerFileName;
     protected double sideAngle;
     
 
-    AngleProgram() {
+    public AngleProgram() {
         this.headerFileName = "SodickCNCProgram/angle1.txt";
         sideAngle = 10.0;
     }
     
-    void addHeader() {
+    public void addHeader() {
         
         ClassLoader cl = this.getClass().getClassLoader();
         InputStream is = cl.getResourceAsStream(headerFileName);
@@ -48,7 +48,7 @@ class AngleProgram extends GeoProgram {
         }
     }
     
-    void addMainProgram( ) {
+    public void addMainProgram( ) {
         Point startPoint = chain.getStartPoint();
         Point secondPoint = chain.getSecondPoint();
         Point lastPoint = chain.getLastPoint();
@@ -57,7 +57,7 @@ class AngleProgram extends GeoProgram {
         buildMain( startPoint, secondPoint, lastPoint, nextToLastPoint );
     }
     
-    void addSubs() throws Exception {
+    public void addSubs() throws Exception {
         
         addSubSection( chain, "N0001");
     }

@@ -6,8 +6,6 @@
 package SodickSickelProgram;
 
 import SodickCNCProgram.SecondReliefProgram;
-import SodickCNCProgram.FirstReliefProgram;
-import SodickCNCProgram.CutProgram;
 import SodickCNCProgram.PartProgram;
 import Toolpkg.Chain;
 
