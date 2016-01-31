@@ -8,7 +8,7 @@ package SodickBomProgram;
 import SodickSickelProgram.CutProgram;
 import SodickSickelProgram.FirstReliefProgram;
 import SodickCNCProgram.PartProgram;
-import SodickCNCProgram.SecondReliefProgram;
+import SodickSickelProgram.SecondReliefProgram;
 import Toolpkg.Chain;
 
 /**

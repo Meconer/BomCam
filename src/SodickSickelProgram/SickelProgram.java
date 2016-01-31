@@ -5,7 +5,6 @@
  */
 package SodickSickelProgram;
 
-import SodickCNCProgram.SecondReliefProgram;
 import SodickCNCProgram.PartProgram;
 import Toolpkg.Chain;
 
