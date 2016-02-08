@@ -11,6 +11,7 @@ package Toolpkg;
  */
 public class Constants {
     public final static double START_LENGTH = 0.5;
-    public final static double FIRST_RELIEF_FACTOR = 0.9773;
+    public final static double FIRST_RELIEF_FACTOR = 0.86;
     public final static double SECOND_RELIEF_FACTOR = 0.95;
+    public final static double SAME_POINT_MAX_DISTANCE = 0.0001;
 }

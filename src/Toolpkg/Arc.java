@@ -58,12 +58,31 @@ public class Arc extends Geometry {
         return direction;
     }
     
-    Geometry getReversedArc() {
+    public Arc getReversedArc() {
         Util.ArcDirection newDirection = Util.ArcDirection.CCW;
         if ( direction == Util.ArcDirection.CCW ) newDirection = Util.ArcDirection.CW;
         return new Arc( centerX, centerY, radius, startAngle, endAngle, newDirection );
     }
 
+    public static Arc getFillet( Line l1, Line l2, double filletRadius) {
+        // The end of l1 must be the start of l2
+        if ( l1.getEndPoint().pointDistance( l2.getStartPoint() ) > Constants.SAME_POINT_MAX_DISTANCE ) {
+            return null;
+        }
+        double biSectorAngle = (l1.getRevAngle() + l2.getAngle()) / 2;
+        double diffAngle = biSectorAngle - l2.getAngle();
+        
+        double lengthOfBiSector = filletRadius / Math.cos(diffAngle);
+        
+        Line l3 = Line.getLineAtAngle( l1.getEndPoint(), biSectorAngle, lengthOfBiSector );
+        
+        Util.ArcDirection dir = Util.ArcDirection.CCW;
+        
+        if (diffAngle < Math.PI ) dir = Util.ArcDirection.CW;
+        
+        Arc fillet = new Arc(l3.getxEnd(), l3.getyEnd(), filletRadius, l1.getAngle() - Math.PI/2, l2.getAngle() - Math.PI/2, dir );
+                return fillet;
+    }
     @Override
     public CNCCodeLine geoToCNCCode(Point lastPoint, Util.GCode lastGCode) {
         Util.GCode gCode;

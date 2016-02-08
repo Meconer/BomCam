@@ -47,7 +47,7 @@ class BomMainProgram extends CNCProgram {
     }
 
     private void buildHeader() {
-        program.add("( SICKEL " + Util.cncRound(stockDia, 1) + " )");
+        program.add("( BOM " + Util.cncRound(stockDia, 1) + " )");
         program.add("( TRAD 0.25 ) ");
         program.add("G56");
         program.add("H110 = " + Util.cncRound(stockDia, 4) + " ( AEMNETS DIAMETER )");

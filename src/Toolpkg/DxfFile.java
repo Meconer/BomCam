@@ -29,8 +29,8 @@ class DxfFile {
     Path path;
     BufferedWriter bufferedWriter;
 
-    private boolean createFile() {
-        JFileChooser jfc = new JFileChooser();
+    private boolean createFile(String chainName) {
+        JFileChooser jfc = new JFileChooser(chainName);
         boolean okToCreate = false;
         int returnVal = jfc.showSaveDialog(null);
         if (returnVal == JFileChooser.CANCEL_OPTION) {
@@ -100,8 +100,8 @@ class DxfFile {
         dxfStringList.add("  0");
     }
 
-    void saveFile() {
-        if (createFile()) {
+    void saveFile(String chainName) {
+        if (createFile(chainName)) {
             try {
                 Iterator<String> i = dxfStringList.iterator();
                 while (i.hasNext()) {
@@ -122,6 +122,11 @@ class DxfFile {
             }
         }
     }
+    
+    public void saveFile() {
+        saveFile("");
+    }
+            
 
     void addEnd() {
         dxfStringList.add("ENDSEC");

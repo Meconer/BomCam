@@ -9,6 +9,7 @@ import SodickCNCProgram.CNCCodeLine;
  */
 public abstract class Geometry {
 
+    public enum offsetSide { LEFT, RIGHT };
     public abstract Point getStartPoint();
     public abstract Point getEndPoint();
 

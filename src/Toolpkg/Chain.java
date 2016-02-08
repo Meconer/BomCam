@@ -18,7 +18,19 @@ public class Chain {
     }
     
     public void add( Geometry geo ) {
+        // Om det inte är första elementet så kontrollera att startpunkten är
+        // samma som slutpunkten på elementet innan
+        if ( !chainList.isEmpty() ) {
+            
+            Point lastEndPoint = chainList.get( chainList.size()-1 ).getEndPoint();
+            Point newStartPoint = geo.getStartPoint();
+            
+            if ( lastEndPoint.pointDistance(newStartPoint)  > Constants.SAME_POINT_MAX_DISTANCE )
+                throw new IllegalArgumentException("Startpunkt för nytt element != slutpunkt på sista elementet vid chainList.add");
+            
+        }
         chainList.add(geo);
+        
     }
     
     public Iterator<Geometry> getIterator() {
@@ -26,6 +38,9 @@ public class Chain {
     }
     
     public void saveChainToDXF() {
+        saveChainToDXF("");
+    }
+    public void saveChainToDXF(String chainName) {
         DxfFile dxfFile = new DxfFile();
         dxfFile.addHeader();
         for (Geometry geo : chainList) {
@@ -47,7 +62,7 @@ public class Chain {
         }
         dxfFile.addEnd();
         
-        dxfFile.saveFile();
+        dxfFile.saveFile(chainName);
     }
 
     public Point getStartPoint() {
@@ -80,5 +95,27 @@ public class Chain {
         }
         
         return reversedChain;
+    }
+
+    // Sätt in en hörnradie mellan de två senaste elementen som måste vara linjer.
+    void insertFillet(double filletRadius) {
+        if ( chainList.size() < 2 ) throw new IllegalArgumentException("Måste vara minst två element i chainlist");
+        Geometry l2 = chainList.get(chainList.size()-1);
+        if ( !(l2 instanceof Line )) throw new IllegalArgumentException("Sista elementet inte en Line");
+        Geometry l1 = chainList.get(chainList.size()-2);
+        if ( !( l1 instanceof Line )) throw new IllegalArgumentException("Näst sista elementet inte en Line");
+        Arc fillet = Arc.getFillet( (Line) l1, (Line) l2, filletRadius);
+
+        // Skapa nya linjer med hörnradien imellan
+        Line nl1 = new Line( l1.getStartPoint(), fillet.getStartPoint());
+        Line nl2 = new Line(fillet.getEndPoint(), l2.getEndPoint());
+        
+        // Tag bort de två sista linjerna
+        chainList.remove(chainList.size()-1);
+        chainList.remove(chainList.size()-1);
+        
+        chainList.add(nl1);
+        chainList.add(fillet);
+        chainList.add(nl2);
     }
 }

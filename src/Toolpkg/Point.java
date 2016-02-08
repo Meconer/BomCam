@@ -51,4 +51,12 @@ public class Point extends Geometry {
     public double squaredDistanceToPoint( Point otherPoint ) {
         return ( Math.pow(xPoint - otherPoint.xPoint, 2 ) + Math.pow(yPoint - otherPoint.yPoint, 2) );
     }
+
+    double pointDistance(Point point) {
+        double xDiff = point.xPoint - this.xPoint;
+        double yDiff = point.yPoint - this.yPoint;
+        
+        double dist = Math.sqrt( xDiff * xDiff + yDiff * yDiff );
+        return dist;
+    }
 }

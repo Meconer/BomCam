@@ -21,7 +21,14 @@ public class Line extends Geometry {
         this.xEnd = xEnd;
         this.yEnd = yEnd;
     }
-
+    
+    public Line( Point start, Point end) {
+        xStart = start.getxPoint();
+        yStart = start.getyPoint();
+        xEnd = end.getxPoint();
+        yEnd = end.getyPoint();
+    }
+    
     public double getxStart() {
         return xStart;
     }
@@ -69,5 +76,42 @@ public class Line extends Geometry {
         return new CNCCodeLine(line, Util.GCode.G01, new Point( xEnd,yEnd ) );
     }
 
+    double getAngle() {
+        return Math.atan2( yEnd - yStart, xEnd - xStart );
+    }
+
+    public static Line getLineAtAngle( Point startPoint, double angle, double length) {
+        Point endPoint = new Point(startPoint.getxPoint() + length * Math.cos(angle), startPoint.getyPoint() + length * Math.sin(angle));
+        return new Line( startPoint, endPoint);
+    }
+    
+    public Line getParallelLine( double distance, offsetSide side) {
+        Line unityVector = getUnity();
+        double rotationAngle = Math.PI/2;
+        if (side == offsetSide.RIGHT ) rotationAngle = -rotationAngle;
+        Line rotatedUnityVector = unityVector.getRotatedLine( rotationAngle );
+        Line scaleLine = rotatedUnityVector.scaleLine(distance);
+        return getLineAtAngle(scaleLine.getEndPoint(), getAngle(), getLength() );
+    }
+    
+    public Line getUnity() {
+        return getLineAtAngle(getStartPoint(), getAngle(), 1.0 );
+    }
+    
+    public Line scaleLine( double scaleFactor ) {
+        return getLineAtAngle(getStartPoint(), getAngle(), getLength() * scaleFactor );
+    }
+    
+    public Line getRotatedLine( double rotAngle ) {
+        return getLineAtAngle(getStartPoint(), rotAngle + getAngle(), getLength());
+    }
+
+    double getRevAngle() {
+        return Math.atan2( yStart - yEnd, xStart - xEnd );
+    }
+
+    private double getLength() {
+        return getStartPoint().pointDistance(getEndPoint());
+    }
 
 }
