@@ -29,6 +29,8 @@ public class Line extends Geometry {
         yEnd = end.getyPoint();
     }
     
+    
+    
     public double getxStart() {
         return xStart;
     }
