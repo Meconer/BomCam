@@ -69,19 +69,26 @@ public class Arc extends Geometry {
         if ( l1.getEndPoint().pointDistance( l2.getStartPoint() ) > Constants.SAME_POINT_MAX_DISTANCE ) {
             return null;
         }
-        double biSectorAngle = (l1.getRevAngle() + l2.getAngle()) / 2;
-        double diffAngle = biSectorAngle - l2.getAngle();
         
-        double lengthOfBiSector = filletRadius / Math.cos(diffAngle);
+        Vector v1 = l1.toVector();
+        Vector v2 = l2.toVector();
+        Vector v1Unity = v1.getUnityVector();
+        Vector v2Unity = v2.getUnityVector();
+        Vector v1UnityReversed = v1Unity.getReversed();
+        Vector biSecVector = v1UnityReversed.add(v2Unity);
+        biSecVector = biSecVector.getScaled(filletRadius);
+
+        Vector l1End = l1.getEndPoint().toVector();
+        Vector filletCenterPoint = l1End.add(biSecVector);
         
-        Line l3 = Line.getLineAtAngle( l1.getEndPoint(), biSectorAngle, lengthOfBiSector );
+        double sign = Math.signum( v1.crossProd2D(v2) );
+        Util.ArcDirection dir = ( sign > 0 ) ? Util.ArcDirection.CCW : Util.ArcDirection.CW;
         
-        Util.ArcDirection dir = Util.ArcDirection.CCW;
-        
-        if (diffAngle < Math.PI ) dir = Util.ArcDirection.CW;
-        
-        Arc fillet = new Arc(l3.getxEnd(), l3.getyEnd(), filletRadius, l1.getAngle() - Math.PI/2, l2.getAngle() - Math.PI/2, dir );
-                return fillet;
+        double startAngle = l1.getAngle() - sign * Math.PI/2;
+        double endAngle = l2.getAngle() - sign * Math.PI/2;
+      
+        Arc fillet = new Arc( filletCenterPoint.getA(), filletCenterPoint.getB(), filletRadius,startAngle,endAngle,dir );
+        return fillet;
     }
     @Override
     public CNCCodeLine geoToCNCCode(Point lastPoint, Util.GCode lastGCode) {

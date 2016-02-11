@@ -59,4 +59,8 @@ public class Point extends Geometry {
         double dist = Math.sqrt( xDiff * xDiff + yDiff * yDiff );
         return dist;
     }
+
+    Vector toVector() {
+        return new Vector(xPoint, yPoint);
+    }
 }

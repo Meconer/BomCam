@@ -29,7 +29,9 @@ public class Line extends Geometry {
         yEnd = end.getyPoint();
     }
     
-    
+    public Vector toVector() {
+        return new Vector(xEnd-xStart, yEnd-yStart);
+    }
     
     public double getxStart() {
         return xStart;

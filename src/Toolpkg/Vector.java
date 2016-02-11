@@ -19,30 +19,39 @@ public class Vector {
         this.b = b;
     }
 
+    // Return the a composant of this vector
     public double getA() {
         return a;
     }
 
+    // Return the b composant of this vector
     public double getB() {
         return b;
     }
 
+    // Return the dot product of this and v.
     public double dotProd(Vector v) {
         return (a * v.getB() + b * v.getA());
     }
 
+    // return vector scaled by scaleFactor
     public Vector getScaled(double scaleFactor) {
         return new Vector(scaleFactor * a, scaleFactor * b);
     }
 
+    // return resulting vector from this + v
     public Vector add( Vector v ) {
-        return new Vector(a + v.getA(), b + getB());
+        double newA = a + v.getA();
+        double newB = b + v.getB();
+        return new Vector(newA , newB);
     }
     
+    // Returns length of vector
     public double getLength() {
         return Math.sqrt(a * a + b * b);
     }
 
+    // Returns normalized vector
     public Vector getUnityVector() {
         Vector retV;
         try {
@@ -51,5 +60,20 @@ public class Vector {
             retV = new Vector(0, 0);
         }
         return retV;
+    }
+
+    // Returns angle of this vector
+    public double getAngle() {
+        return Math.atan2(b, a);
+    }
+
+    // Returns reversed vector
+    public Vector getReversed() {
+        return new Vector(-a, -b);
+    }
+    
+    // Returns the z-axis component of this vector and v
+    public double crossProd2D( Vector v ) {
+        return ( a* v.getB()- b*v.getA());
     }
 }
