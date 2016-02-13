@@ -118,4 +118,38 @@ public class Line extends Geometry {
         return getStartPoint().pointDistance(getEndPoint());
     }
 
+    public Vector intersection(Line l2Par) {
+        final double epsilon = 0.00000001;
+        // See article at http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+        Vector pV = this.getStartPoint().toVector();
+        Vector qV = l2Par.getStartPoint().toVector();
+        Vector sV = l2Par.toVector();
+        Vector rV = this.toVector();
+        
+        // Calculate t = (qV-pV) x sV / ( rV x sV )
+        // First calculate rV x sV (in 2d)
+        double rVxsV = rV.crossProd2D(sV);
+        
+        // Check if the lines are parallell
+        if ( rVxsV < epsilon ) {
+            // Lines are parallell. In this application we only need to know 
+            // this since we want to make a fillet and this doesn't make sense
+            // for parallell lines. Intersection could happen if the lines are
+            // colinear though and should be checked too if we want to find
+            // these cases.
+            return null;
+        }
+        
+        // Calculate ( qV - pV ) x sV
+        double qVmpVxsV = qV.subtract(pV).crossProd2D(sV);
+        
+        // Calculate t = (qV-pV) x sV / ( rV x sV )
+        double t = qVmpVxsV / rVxsV;
+        
+        // Find intersectionPoint at pV + t * rV
+        Vector intersection = pV.add( rV.getScaled(t));
+        
+        return intersection;
+    }
+
 }

@@ -46,6 +46,15 @@ public class Vector {
         return new Vector(newA , newB);
     }
     
+    // return resulting vector from this - v
+    public Vector subtract( Vector v ) {
+        double newA = a - v.getA();
+        double newB = b - v.getB();
+        return new Vector(newA , newB);
+    }
+    
+    
+    
     // Returns length of vector
     public double getLength() {
         return Math.sqrt(a * a + b * b);
@@ -75,5 +84,9 @@ public class Vector {
     // Returns the z-axis component of this vector and v
     public double crossProd2D( Vector v ) {
         return ( a* v.getB()- b*v.getA());
+    }
+    
+    public Point toPoint() {
+        return new Point(a, b);
     }
 }

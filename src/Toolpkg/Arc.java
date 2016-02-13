@@ -42,16 +42,16 @@ public class Arc extends Geometry {
 
     @Override
     public Point getStartPoint() {
-        return new Point(
-                centerX + radius * Math.cos(Math.toRadians(startAngle)), 
-                centerY + radius * Math.sin( Math.toRadians(startAngle)));
+        double x = centerX + radius * Math.cos( Math.toRadians(startAngle ));
+        double y = centerY + radius * Math.sin( Math.toRadians(startAngle) );
+        return new Point( x, y );
     }
     
     @Override
     public Point getEndPoint() {
         return new Point(
-                centerX + radius * Math.cos(Math.toRadians(endAngle)), 
-                centerY + radius * Math.sin( Math.toRadians(endAngle)));
+                centerX + radius * Math.cos( Math.toRadians(endAngle )), 
+                centerY + radius * Math.sin( Math.toRadians(endAngle )));
     }
 
     public Util.ArcDirection getDirection() {
@@ -61,7 +61,7 @@ public class Arc extends Geometry {
     public Arc getReversedArc() {
         Util.ArcDirection newDirection = Util.ArcDirection.CCW;
         if ( direction == Util.ArcDirection.CCW ) newDirection = Util.ArcDirection.CW;
-        return new Arc( centerX, centerY, radius, startAngle, endAngle, newDirection );
+        return new Arc( centerX, centerY, radius, endAngle, startAngle, newDirection );
     }
 
     public static Arc getFillet( Line l1, Line l2, double filletRadius) {
@@ -69,23 +69,30 @@ public class Arc extends Geometry {
         if ( l1.getEndPoint().pointDistance( l2.getStartPoint() ) > Constants.SAME_POINT_MAX_DISTANCE ) {
             return null;
         }
-        
+        // Get direction vectors of the two lines
         Vector v1 = l1.toVector();
         Vector v2 = l2.toVector();
-        Vector v1Unity = v1.getUnityVector();
-        Vector v2Unity = v2.getUnityVector();
-        Vector v1UnityReversed = v1Unity.getReversed();
-        Vector biSecVector = v1UnityReversed.add(v2Unity);
-        biSecVector = biSecVector.getScaled(filletRadius);
-
-        Vector l1End = l1.getEndPoint().toVector();
-        Vector filletCenterPoint = l1End.add(biSecVector);
         
+        // find out if v2 turns left or right from v1 by taking the cross product. If
+        // it is negative it turns right and positive turns left
         double sign = Math.signum( v1.crossProd2D(v2) );
         Util.ArcDirection dir = ( sign > 0 ) ? Util.ArcDirection.CCW : Util.ArcDirection.CW;
         
-        double startAngle = l1.getAngle() - sign * Math.PI/2;
-        double endAngle = l2.getAngle() - sign * Math.PI/2;
+        // The fillets angles
+        double startAngle = Math.toDegrees(l1.getAngle() - sign * Math.PI/2);
+        double endAngle = Math.toDegrees(l2.getAngle() - sign * Math.PI/2);
+        
+        // Now get the lines parallell to l1 and l2 with a distance to the original
+        // lines that is same as the filletRadius
+        offsetSide side = ( dir == Util.ArcDirection.CCW) ? offsetSide.LEFT : offsetSide.RIGHT;
+        Line l1Par = l1.getParallelLine(filletRadius, side );
+        Line l2Par = l2.getParallelLine(filletRadius, side );
+        Vector filletCenterPoint = l1Par.intersection( l2Par );
+        
+        if ( filletCenterPoint == null ) { 
+            // No intersection suitable for fillet found
+            return null;
+        }
       
         Arc fillet = new Arc( filletCenterPoint.getA(), filletCenterPoint.getB(), filletRadius,startAngle,endAngle,dir );
         return fillet;

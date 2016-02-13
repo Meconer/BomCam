@@ -77,7 +77,7 @@ public class StraightProgram extends GeoProgram {
         program.add("M98 P0001");
     }
 
-    protected void addSubSection(Chain chainToCode, String subNumber) throws Exception {
+    protected void addSubSection(Chain chainToCode, String subNumber) throws IllegalArgumentException {
         // Början på underprogrammet
         program.add("");
         program.add(subNumber);
@@ -92,8 +92,12 @@ public class StraightProgram extends GeoProgram {
         Iterator<Geometry> geoIter = chainToCode.getIterator();
         
         // Skippa första linjen
-        if ( geoIter.hasNext() ) geoIter.next();
-        else throw new Exception("Tom länk vid addSubSection");  // Något är fel om det inte finns någon länk här.
+        if ( geoIter.hasNext() ) {
+            geoIter.next();
+        } else {
+            // Något är fel om det inte finns någon länk här.
+            throw new IllegalArgumentException("Tom länk vid addSubSection");
+        }
 
         while ( geoIter.hasNext() ) {
             Geometry geo = geoIter.next();

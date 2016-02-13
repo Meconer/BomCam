@@ -13,7 +13,7 @@ public class PartProgram extends StraightFineProgram {
         addMainProgram();
         try {
             addSubs();
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException ex) {
             System.err.println(ex.getMessage());
         }
     }
