@@ -52,6 +52,11 @@ public class Util {
             return origDouble;
         }
     }
+    
+    static boolean doubleEquals( double d1, double d2 ) {
+        final double epsilon = 0.00000001;
+        return  Math.abs(d2-d1) < epsilon;
+    }
 
     static int countMatches(String value, String string) {
         return string.length() - string.replace(value, "").length();
