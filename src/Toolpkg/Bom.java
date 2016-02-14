@@ -328,29 +328,34 @@ public class Bom {
         
 
         
-        // Frigången fram till den möter 10-graderslinjen upp till skärspetsen
-        double radianAngle = Math.toRadians( 10 );
-        double yLength10 = radiusAtTip.get() + yClearance - noseRadius.get() * ( 1 - Math.cos( radianAngle ) );
-        double xLength10 = yLength10 / Math.tan( radianAngle );
-        xNext = viperLength.get() + noseRadius.get() * ( 1 + Math.sin( radianAngle ) ) + xLength10 ;
-        secondReliefChain.add(new Line( xStart, yStart, xNext, yNext));
-        xStart = xNext;
-        yStart = yNext;
+//        // Frigången fram till den möter 10-graderslinjen upp till skärspetsen
+//        double radianAngle = Math.toRadians( 10 );
+//        double yLength10 = radiusAtTip.get() + yClearance - noseRadius.get() * ( 1 - Math.cos( radianAngle ) );
+//        double xLength10 = yLength10 / Math.tan( radianAngle );
+//        xNext = viperLength.get() + noseRadius.get() * ( 1 + Math.sin( radianAngle ) ) + xLength10 ;
+//        secondReliefChain.add(new Line( xStart, yStart, xNext, yNext));
+//        xStart = xNext;
+//        yStart = yNext;
         
-        secondReliefChain.insertFillet( 1.0 ); // Insert a fillet radius before last line
-        
-        // Och så 10-graderslinjen
-        xNext = xStart - xLength10;
-        yNext = yStart - yLength10;
-        secondReliefChain.add(new Line( xStart, yStart, xNext, yNext));
-        
-        xStart = xNext;
-        yStart = yNext;
-        
-        // Go to x0
+
+        // Frigång till X0
         xNext = 0;
-        secondReliefChain.add(new Line( xStart, yStart, xNext, yNext));
+        secondReliefChain.add(new Line(xStart, yStart, xNext, yNext));
+        secondReliefChain.insertFillet( 1.0 ); // Insert a fillet radius before last line
         xStart = xNext;
+        
+//        // Och så 10-graderslinjen
+//        xNext = xStart - xLength10;
+//        yNext = yStart - yLength10;
+//        secondReliefChain.add(new Line( xStart, yStart, xNext, yNext));
+//        
+//        xStart = xNext;
+//        yStart = yNext;
+        
+//        // Go to x0
+//        xNext = 0;
+//        secondReliefChain.add(new Line( xStart, yStart, xNext, yNext));
+//        xStart = xNext;
         
         // Two end lines
         xNext = -START_LENGTH;
@@ -374,7 +379,7 @@ public class Bom {
         Chain firstReleifChain = calculateFirstReliefChain();
         // firstReleifChain.saveChainToDXF("FirstReliefChain.dxf");
         Chain secondReliefChain = calculateSecondReliefChain();
-        //secondReliefChain.saveChainToDXF("SecondReliefChain.dxf");
+        secondReliefChain.saveChainToDXF("SecondReliefChain.dxf");
         BomProgram program = new BomProgram(partedBlank.getStockDia(),
             partedBlank.getHalfLength() + partedBlank.getStockDia() / 2 + 1.0);
         program.setChains( partChain, cutGeoChain, firstReleifChain, secondReliefChain );
