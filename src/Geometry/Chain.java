@@ -1,6 +1,8 @@
 
-package Toolpkg;
+package Geometry;
 
+import Toolpkg.Constants;
+import Toolpkg.DxfFile;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -98,7 +100,7 @@ public class Chain {
     }
 
     // Sätt in en hörnradie mellan de två senaste elementen som måste vara linjer.
-    void insertFillet(double filletRadius) {
+    public void insertFillet(double filletRadius) {
         if ( chainList.size() < 2 ) throw new IllegalArgumentException("Måste vara minst två element i chainlist");
         Geometry l2 = chainList.get(chainList.size()-1);
         if ( !(l2 instanceof Line )) throw new IllegalArgumentException("Sista elementet inte en Line");

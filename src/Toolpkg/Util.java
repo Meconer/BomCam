@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public class Util {
 
-    static String gCodeToString(GCode gCode) {
+    public static String gCodeToString(GCode gCode) {
         String s;
         switch (gCode) {
             case G01 :

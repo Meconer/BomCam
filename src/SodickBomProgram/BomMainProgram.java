@@ -6,7 +6,7 @@
 package SodickBomProgram;
 
 import SodickCNCProgram.CNCProgram;
-import Toolpkg.Chain;
+import Geometry.Chain;
 import Toolpkg.Util;
 import java.io.BufferedReader;
 import java.io.IOException;

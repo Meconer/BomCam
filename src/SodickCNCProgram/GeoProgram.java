@@ -5,7 +5,7 @@
  */
 package SodickCNCProgram;
 
-import Toolpkg.Chain;
+import Geometry.Chain;
 
 /**
  *

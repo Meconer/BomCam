@@ -6,7 +6,7 @@
 package SodickSickelProgram;
 
 import SodickCNCProgram.PartProgram;
-import Toolpkg.Chain;
+import Geometry.Chain;
 
 /**
  *

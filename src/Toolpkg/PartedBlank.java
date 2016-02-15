@@ -5,6 +5,9 @@
  */
 package Toolpkg;
 
+import Geometry.Chain;
+import Geometry.Arc;
+import Geometry.Line;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 

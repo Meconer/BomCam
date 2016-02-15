@@ -6,9 +6,9 @@
 package SodickCNCProgram;
 
 
-import Toolpkg.Chain;
-import Toolpkg.Geometry;
-import Toolpkg.Point;
+import Geometry.Chain;
+import Geometry.Geometry;
+import Geometry.Point;
 import Toolpkg.Util;
 import java.io.BufferedReader;
 import java.io.IOException;

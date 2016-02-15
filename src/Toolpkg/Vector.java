@@ -5,6 +5,8 @@
  */
 package Toolpkg;
 
+import Geometry.Point;
+
 /**
  *
  * @author Mats

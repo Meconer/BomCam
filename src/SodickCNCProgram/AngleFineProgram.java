@@ -5,7 +5,7 @@
  */
 package SodickCNCProgram;
 
-import Toolpkg.Point;
+import Geometry.Point;
 
 /**
  *

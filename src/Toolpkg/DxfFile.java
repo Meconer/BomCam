@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  *
  * @author mats
  */
-class DxfFile {
+public class DxfFile {
 
     List<String> dxfStringList = new LinkedList();
     Path path;
@@ -60,7 +60,7 @@ class DxfFile {
     }
 
 
-    void addArc(Point2D.Double center, double arcStart, double arcEnd, double radie) {
+    public void addArc(Point2D.Double center, double arcStart, double arcEnd, double radie) {
         dxfStringList.add("ARC");
         dxfStringList.add("  8");
         dxfStringList.add("0");
@@ -77,7 +77,7 @@ class DxfFile {
         dxfStringList.add(" 0");
     }
 
-    void addLine(Point2D.Double startPoint, Point2D.Double endPoint) {
+    public void addLine(Point2D.Double startPoint, Point2D.Double endPoint) {
         dxfStringList.add("LINE");
         dxfStringList.add("  8");
         dxfStringList.add("0");
@@ -92,7 +92,7 @@ class DxfFile {
         dxfStringList.add(" 0");
     }
 
-    void addHeader() {
+    public void addHeader() {
         dxfStringList.add("  0");
         dxfStringList.add("SECTION");
         dxfStringList.add("  2");
@@ -100,7 +100,7 @@ class DxfFile {
         dxfStringList.add("  0");
     }
 
-    void saveFile(String chainName) {
+    public void saveFile(String chainName) {
         if (createFile(chainName)) {
             try {
                 Iterator<String> i = dxfStringList.iterator();
@@ -128,7 +128,7 @@ class DxfFile {
     }
             
 
-    void addEnd() {
+    public void addEnd() {
         dxfStringList.add("ENDSEC");
         dxfStringList.add("  0");
         dxfStringList.add("EOF");

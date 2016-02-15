@@ -1,6 +1,9 @@
-package Toolpkg;
+package Geometry;
 
 import SodickCNCProgram.CNCCodeLine;
+import Toolpkg.Constants;
+import Toolpkg.Util;
+import Toolpkg.Vector;
 
 /**
  *

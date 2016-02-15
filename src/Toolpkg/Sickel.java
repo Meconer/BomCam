@@ -1,6 +1,8 @@
 
 package Toolpkg;
 
+import Geometry.Chain;
+import Geometry.Line;
 import SodickSickelProgram.SickelProgram;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

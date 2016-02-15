@@ -9,7 +9,7 @@ import SodickSickelProgram.CutProgram;
 import SodickSickelProgram.FirstReliefProgram;
 import SodickCNCProgram.PartProgram;
 import SodickSickelProgram.SecondReliefProgram;
-import Toolpkg.Chain;
+import Geometry.Chain;
 
 /**
  *

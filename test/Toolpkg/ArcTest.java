@@ -5,6 +5,9 @@
  */
 package Toolpkg;
 
+import Geometry.Arc;
+import Geometry.Line;
+import Geometry.Point;
 import SodickCNCProgram.CNCCodeLine;
 import org.junit.After;
 import org.junit.AfterClass;
