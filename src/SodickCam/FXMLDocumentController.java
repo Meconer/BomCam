@@ -2,6 +2,7 @@
 package SodickCam;
 
 import Toolpkg.Bom;
+import Toolpkg.Borr;
 import Toolpkg.Sickel;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ public class FXMLDocumentController implements Initializable {
     
     Sickel sickel;
     Bom bom;
+    Borr borr;
     
     @FXML
     private TextField sickelStockDia;
@@ -77,6 +79,11 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
+    void borrCalculate(ActionEvent event) {
+        borr.calculate();
+    }
+    
+    @FXML
     void closeProgram() {
         System.exit(0);
     }
@@ -91,6 +98,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         sickel = new Sickel();
         bom = new Bom();
+        borr = new Borr();
 
         StringConverter<Number> converter = new NumberStringConverter();
         
