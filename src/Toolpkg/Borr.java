@@ -15,17 +15,17 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
  * @author Mats
  */
 public class Borr {
-    private class ZRadiusPair {
-        private final double z;
+    private class XRadiusPair {
+        private final double x;
         private final double radius;
 
-        public ZRadiusPair(double z, double radius) {
-            this.z = z;
+        public XRadiusPair(double x, double radius) {
+            this.x = x;
             this.radius = radius;
         }
 
-        public double getZ() {
-            return z;
+        public double getX() {
+            return x;
         }
 
         public double getRadius() {
@@ -33,44 +33,55 @@ public class Borr {
         }
     }
     
-    private final ArrayList<ZRadiusPair> pairList = new ArrayList<>();
+    private final ArrayList<XRadiusPair> pairList = new ArrayList<>();
     private double tipThickness = 0.5;
     private double angle = 2;
     
     public Borr() {
-        pairList.add(new ZRadiusPair( 0,0 ));
-        pairList.add(new ZRadiusPair( 1,3 ));
-        pairList.add(new ZRadiusPair( 5,3 ));
-        pairList.add(new ZRadiusPair( 7,5 ));
-        pairList.add(new ZRadiusPair( 10,5 ));
-        pairList.add(new ZRadiusPair( 11,6 ));
+        pairList.add(new XRadiusPair( 0,0 ));
+        pairList.add(new XRadiusPair( 1,3 ));
+        pairList.add(new XRadiusPair( 5,3 ));
+        pairList.add(new XRadiusPair( 7,5 ));
+        pairList.add(new XRadiusPair( 10,5 ));
+        pairList.add(new XRadiusPair( 11,6 ));
     }
     
-    // Returns thickness of blank at z
-    private double blankThickness( double z ) {
-        return tipThickness + z * Math.tan(Math.toRadians(angle));
+    // Returns thickness of blank at x
+    private double halfBlankThickness( double x ) {
+        return tipThickness + x * Math.tan(Math.toRadians(angle));
     }
     
     public void calculate() {
         
-        ZRadiusPair prevPair = pairList.get(0);
-        ZRadiusPair nextPair = pairList.get(1);
+        XRadiusPair prevPair = pairList.get(0);
+        XRadiusPair nextPair = pairList.get(1);
         
+        Vector3D startPoint = new Vector3D( 0, 0, 0 );
         
-        Plane3D startPlane = new Plane3D(new Vector3D(prevPair.z, prevPair.radius, blankThickness(prevPair.z)), new Vector3D(-1,0,0));
+        // Next point is at a a radius line rotated upwards so it touches the
+        // surface at the blank at this x.
+        // We get the y value with pythagorean theorem by:
         
-        System.out.println("StartPt : "+ startPlane.point);
-        
-        Vector3D nextPoint = new Vector3D(nextPair.z, nextPair.radius, blankThickness(nextPair.z));
+        double r = nextPair.getRadius();
+        double x = nextPair.getX();
+        double z = halfBlankThickness( x );
+        double y = - Math.sqrt( r*r - z*z); // Y is on the negative side.
+        Vector3D nextPoint = new Vector3D( x, y, z);
         System.out.println("nextpt : "+ nextPoint);
+        System.out.println("nextpt.unit : "+ nextPoint.normalize());
         
-        Vector3D rotationAxis = nextPoint.subtract(startPlane.point);
+        // Make a new plane x=0 and rotate it so it goes through the z axis and
+        // nextPoint.
+        
+        Plane3D firstPlane = new Plane3D( startPoint, new Vector3D( y, -x, 0).normalize());
+        System.out.println("firstPlane " + firstPlane);
+        Vector3D rotationAxis = nextPoint.subtract(startPoint);
         System.out.println("RotAx : "+ rotationAxis);
         
         Rotation rot1 = new Rotation(rotationAxis, Math.toRadians(5), RotationConvention.VECTOR_OPERATOR);
         
-        Vector3D newNormal = rot1.applyTo(startPlane.normal);
-        System.out.println("Rot1 : "+ newNormal);
+        //Vector3D newNormal = rot1.applyTo(startPlane.normal);
+        //System.out.println("Rot1 : "+ newNormal);
         
     }
     
