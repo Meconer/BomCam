@@ -105,14 +105,12 @@ public class Arc extends Geometry {
         Util.GCode gCode;
         Point startPoint;
         Point endPoint;
+        startPoint = getStartPoint();
+        endPoint = getEndPoint();
         if ( direction == Util.ArcDirection.CCW ) {
             gCode = Util.GCode.G03;
-            startPoint = getStartPoint();
-            endPoint = getEndPoint();
         } else {
             gCode = Util.GCode.G02;
-            startPoint = getEndPoint();
-            endPoint = getStartPoint();
         }
         double iValue = centerX - startPoint.getxPoint();
         double jValue = centerY - startPoint.getyPoint();
