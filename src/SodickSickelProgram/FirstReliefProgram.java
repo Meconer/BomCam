@@ -5,16 +5,16 @@
  */
 package SodickSickelProgram;
 
-import SodickCNCProgram.StraightProgram;
+import SodickCNCProgram.AngleProgram;
 
 /**
  *
  * @author Mats
  */
-public class FirstReliefProgram extends StraightProgram {
+public class FirstReliefProgram extends AngleProgram {
     
     public FirstReliefProgram() {
-        //sideAngle = 5.0;
+        this.sideAngle = 5.0;
     }
 
     public void build(String fileName) {
