@@ -152,12 +152,9 @@ public class Sickel {
         // Sedan till spets
         firstReliefChain.add(new Line( xStart, yStart, 0, -yNegAtTip ) );
         
-        // Till centrum
-        firstReliefChain.add(new Line( 0, -yNegAtTip, 0, 0 ) );
-        
-        // Två slutsträckor y+
-        firstReliefChain.add(new Line( 0, 0, 0, Constants.START_LENGTH ));
-        firstReliefChain.add(new Line( 0, Constants.START_LENGTH, 0, 2 * Constants.START_LENGTH ));
+        // Två slutsträckor i x-
+        firstReliefChain.add(new Line( 0, -yNegAtTip, -Constants.START_LENGTH, -yNegAtTip ));
+        firstReliefChain.add(new Line( -Constants.START_LENGTH, -yNegAtTip, -2*Constants.START_LENGTH, -yNegAtTip ));
         
         
         return firstReliefChain;
@@ -183,12 +180,9 @@ public class Sickel {
         // Sedan till spets
         secondReliefChain.add(new Line( xStart, yStart, 0, -yNegAtTip ) );
         
-        // Till centrum
-        secondReliefChain.add(new Line( 0, -yNegAtTip, 0, 0 ) );
-        
-        // Två slutsträckor y+
-        secondReliefChain.add(new Line( 0, 0, 0, Constants.START_LENGTH ));
-        secondReliefChain.add(new Line( 0, Constants.START_LENGTH, 0, 2 * Constants.START_LENGTH ));
+        // Två slutsträckor i x-
+        secondReliefChain.add(new Line( 0, -yNegAtTip, -Constants.START_LENGTH, -yNegAtTip ));
+        secondReliefChain.add(new Line( -Constants.START_LENGTH, -yNegAtTip, -2*Constants.START_LENGTH, -yNegAtTip ));
         
         
         return secondReliefChain;
