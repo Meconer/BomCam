@@ -1,7 +1,7 @@
 
 package SodickCam;
 
-import Toolpkg.Bom;
+import SodickBomProgram.Bom;
 import Toolpkg.Borr;
 import SodickSickelProgram.Sickel;
 import java.net.URL;

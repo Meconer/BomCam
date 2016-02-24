@@ -1,10 +1,12 @@
 
-package Toolpkg;
+package SodickBomProgram;
 
 import Geometry.Chain;
 import Geometry.Arc;
 import Geometry.Line;
-import SodickBomProgram.BomProgram;
+import Toolpkg.Constants;
+import Toolpkg.PartedBlank;
+import Toolpkg.Util;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
