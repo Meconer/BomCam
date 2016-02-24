@@ -3,7 +3,7 @@ package SodickCam;
 
 import Toolpkg.Bom;
 import Toolpkg.Borr;
-import Toolpkg.Sickel;
+import SodickSickelProgram.Sickel;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
