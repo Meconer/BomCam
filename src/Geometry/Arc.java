@@ -69,7 +69,7 @@ public class Arc extends Geometry {
 
     public static Arc getFillet( Line l1, Line l2, double filletRadius) {
         // The end of l1 must be the start of l2
-        if ( l1.getEndPoint().pointDistance( l2.getStartPoint() ) > Constants.SAME_POINT_MAX_DISTANCE ) {
+        if ( l1.getEndPoint().pointDistance( l2.getStartPoint() ) > Constants.TOLERANCE ) {
             return null;
         }
         // Get direction vectors of the two lines

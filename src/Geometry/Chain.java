@@ -27,7 +27,7 @@ public class Chain {
             Point lastEndPoint = chainList.get( chainList.size()-1 ).getEndPoint();
             Point newStartPoint = geo.getStartPoint();
             double distance = lastEndPoint.pointDistance(newStartPoint);
-            if ( distance  > Constants.SAME_POINT_MAX_DISTANCE )
+            if ( distance  > Constants.TOLERANCE )
                 throw new IllegalArgumentException("Startpunkt för nytt element != slutpunkt på sista elementet vid chainList.add");
             
         }
