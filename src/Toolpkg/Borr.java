@@ -73,7 +73,7 @@ public class Borr {
 
         // Calculate a series of planes that make up the drill edges.
         Iterator<XRadiusAngleTriplet> tripletIterator = drillList.iterator();
-        if ( tripletIterator.hasNext() == false ) throw new IndexOutOfBoundsException("borrList har inga element");
+        if ( !tripletIterator.hasNext() ) throw new IndexOutOfBoundsException("borrList har inga element");
         prevTriplet = tripletIterator.next();
         while ( tripletIterator.hasNext() ) {
             
@@ -136,17 +136,23 @@ public class Borr {
         
         // We now have a list of 3D lines through the vertices of the drill edges.
         // We get the intersection of each line with a plane that is 2 mm above
-        // the XY plane.
+        // the XY plane and another plane that is 2 mm below.
         Plane abovePlane = new Plane( new Vector3D(0,0,2), new Vector3D( 0,0,1), Constants.TOLERANCE);
+        Plane belowPlane = new Plane( new Vector3D(0,0,-2), new Vector3D( 0,0,1), Constants.TOLERANCE);
         
-        // Now make a list of intersection points with the lines in the line list.
-        ArrayList<Vector3D> pointList = new ArrayList<>();
+        // Now make two lists of intersection points with the lines in the line lists
+        ArrayList<Vector3D> abovePointList = new ArrayList<>();
+        ArrayList<Vector3D> belowPointList = new ArrayList<>();
         Iterator<Line> lineIterator = lineList.iterator();
         while ( lineIterator.hasNext() ) {
             line = lineIterator.next();
-            Vector3D intersection = abovePlane.intersection(line);
-            pointList.add(intersection);
-            System.out.println("Point : " + intersection.toString());
+            Vector3D aboveIntersection = abovePlane.intersection(line);
+            Vector3D belowIntersection = belowPlane.intersection(line);
+            Vector3D mirroredBelow = new Vector3D(belowIntersection.getX(), -belowIntersection.getY(), -belowIntersection.getZ());
+            abovePointList.add(aboveIntersection);
+            belowPointList.add(mirroredBelow);
+            System.out.println("Point : " + aboveIntersection.toString());
+            System.out.println("BelowPoint : " + mirroredBelow.toString());
         }
     }
     

@@ -67,6 +67,15 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private TextField bomStraightFrontLength;
+    
+    @FXML
+    private TextField drillStockDiameter;
+
+    @FXML
+    private TextField drillTipThickness;
+
+    @FXML
+    private TextField drillAngle;
 
     @FXML
     void sickelCalculate(ActionEvent event) {
