@@ -2,6 +2,10 @@ package Toolpkg;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import org.apache.commons.math3.geometry.euclidean.threed.Line;
 import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
@@ -40,22 +44,67 @@ public class Borr {
     
     private final ArrayList<XRadiusAngleTriplet> drillList = new ArrayList<>();
     private final ArrayList<Plane> planeList = new ArrayList<>();
-    private final double tipThickness = 0.5;
-    private final double angle = 2.0;
-    private final double stockDiameter = 12.0;
+
+    private final DoubleProperty tipThickness;   
+    private final DoubleProperty angle;
+    private final DoubleProperty stockDiameter;
+    
+    private String specText = "";
     
     public Borr() {
-        drillList.add(new XRadiusAngleTriplet( 0,0,0 ));
-        drillList.add(new XRadiusAngleTriplet( 1,3,5 ));
-        drillList.add(new XRadiusAngleTriplet( 5,3,2 ));
-        drillList.add(new XRadiusAngleTriplet( 7,5,5 ));
-        drillList.add(new XRadiusAngleTriplet( 10,5,2 ));
-        drillList.add(new XRadiusAngleTriplet( 11,6,5 ));
+        tipThickness = new SimpleDoubleProperty(1.0);
+        angle = new SimpleDoubleProperty(2.0);
+        stockDiameter = new SimpleDoubleProperty(12.0);
     }
+
+    public DoubleProperty getTipThicknessProperty() {
+        return tipThickness;
+    }
+
+    public DoubleProperty getAngleProperty() {
+        return angle;
+    }
+
+    public DoubleProperty getStockDiameterProperty() {
+        return stockDiameter;
+    }
+    
+    
+    public void setSpecText(String specText) {
+        this.specText = specText;
+    }
+
+
+    private void buildTripletListFromSpecText() {
+        String[] specList = specText.split("\n");
+        String doubleRegex = "[-+]?[0-9]*\\.?[0-9]*";
+        String zRegex = "[zZ](" + doubleRegex + ")";
+        String radiusRegex = "[rR](" + doubleRegex + ")";
+        String angleRegex = "[aA](" + doubleRegex + ")";
+        Pattern zPattern = Pattern.compile(zRegex);
+        Pattern radiusPattern = Pattern.compile(radiusRegex);
+        Pattern anglePattern = Pattern.compile(angleRegex);
+        
+        double radius = 0;
+        double z = 0;
+        double angle = 0;
+
+        for ( String s : specList) {
+            Matcher zMatcher = zPattern.matcher(s);
+            if ( zMatcher.find() ) z = Double.parseDouble(zMatcher.group(1));
+            Matcher angleMatcher = anglePattern.matcher(s);
+            if ( angleMatcher.find() ) angle = Double.parseDouble(angleMatcher.group(1));
+            Matcher radiusMatcher = radiusPattern.matcher(s);
+            if ( radiusMatcher.find() ) radius = Double.parseDouble(radiusMatcher.group(1));
+            drillList.add( new XRadiusAngleTriplet(z, radius, angle));
+        }
+    }
+
+    
     
     // Returns thickness of blank at x
     private double halfBlankThickness( double x ) {
-        return tipThickness + x * Math.tan(Math.toRadians(angle));
+        return tipThickness.get() + x * Math.tan(Math.toRadians(angle.get()));
     }
     
     
@@ -67,6 +116,8 @@ public class Borr {
 
     // Calculate the chains for the drill cutting toolpath.
     public void calculate() {
+        
+        buildTripletListFromSpecText();
         
         XRadiusAngleTriplet prevTriplet;
         XRadiusAngleTriplet nextTriplet;
@@ -130,7 +181,7 @@ public class Borr {
         // vertical line at the negative radius of the blank.
         
         // First make the vertical plane at the negative radius
-        Plane radVerticalPlane = new Plane( new Vector3D( 0, -stockDiameter/2, 0), new Vector3D(0,-1,0), Constants.TOLERANCE);
+        Plane radVerticalPlane = new Plane( new Vector3D( 0, -stockDiameter.get()/2, 0), new Vector3D(0,-1,0), Constants.TOLERANCE);
         Line line = prevPlane.intersection(radVerticalPlane);
         lineList.add(line);
         

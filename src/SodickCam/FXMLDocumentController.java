@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
@@ -76,6 +77,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private TextField drillAngle;
+    
+    @FXML 
+    private TextArea drillSpecTextArea;
 
     @FXML
     void sickelCalculate(ActionEvent event) {
@@ -89,6 +93,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     void borrCalculate(ActionEvent event) {
+        borr.setSpecText( drillSpecTextArea.getText() );
         borr.calculate();
     }
     
@@ -126,6 +131,10 @@ public class FXMLDocumentController implements Initializable {
         Bindings.bindBidirectional(bomClearanceLength.textProperty(), bom.getClearanceLengthProperty(), converter );
         Bindings.bindBidirectional(bomRadiusAtTip.textProperty(), bom.getRadiusAtTipProperty(), converter );
         Bindings.bindBidirectional(bomStraightFrontLength.textProperty(), bom.getStraightFrontLengthProperty(), converter );
+        
+        Bindings.bindBidirectional(drillTipThickness.textProperty(), borr.getStockDiameterProperty(), converter);
+        Bindings.bindBidirectional(drillAngle.textProperty(), borr.getAngleProperty(), converter);
+        Bindings.bindBidirectional(drillTipThickness.textProperty(), borr.getTipThicknessProperty(), converter);
         
     }    
 

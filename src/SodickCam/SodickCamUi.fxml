@@ -429,7 +429,7 @@
                                           </HBox>
                                           <HBox prefWidth="1024.0">
                                              <children>
-                                                <TextArea prefHeight="300.0" prefWidth="1004.0" text="0.0 0.0 0.0&#10;1.732 3.0 5.0 ( z-mått radie skärvinkel )&#10;5.732 3.0 1.0&#10;8.732 6.0 5.0&#10;" />
+                                                <TextArea fx:id="drillSpecTextArea" prefHeight="300.0" prefWidth="1004.0" text="Z0.0 R0.0&#10;Z1.732 R3.0 A5.0&#10;Z5.732 A1.0&#10;Z8.732 R6.0 A5.0&#10;" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
