@@ -87,16 +87,16 @@ public class Borr {
         
         double radius = 0;
         double z = 0;
-        double angle = 0;
+        double ang = 0;
 
         for ( String s : specList) {
             Matcher zMatcher = zPattern.matcher(s);
             if ( zMatcher.find() ) z = Double.parseDouble(zMatcher.group(1));
             Matcher angleMatcher = anglePattern.matcher(s);
-            if ( angleMatcher.find() ) angle = Double.parseDouble(angleMatcher.group(1));
+            if ( angleMatcher.find() ) ang = Double.parseDouble(angleMatcher.group(1));
             Matcher radiusMatcher = radiusPattern.matcher(s);
             if ( radiusMatcher.find() ) radius = Double.parseDouble(radiusMatcher.group(1));
-            drillList.add( new XRadiusAngleTriplet(z, radius, angle));
+            drillList.add( new XRadiusAngleTriplet(z, radius, ang));
         }
     }
 
@@ -169,21 +169,19 @@ public class Borr {
         Plane prevPlane = planeList.get(0).rotate(new Vector3D(0,0,0), rotation);
 
         ArrayList<Line> lineList = new ArrayList<>();
-        
-        Iterator<Plane> planeIterator = planeList.iterator();
-        while ( planeIterator.hasNext() ) {
-            Plane nextPlane = planeIterator.next();
+
+        for ( Plane nextPlane : planeList ) {
             Line line = prevPlane.intersection(nextPlane);
             lineList.add(line);
             prevPlane = nextPlane;
         }
+
         // Add a last line that is the intersection of the last plane and a 
         // vertical line at the negative radius of the blank.
         
         // First make the vertical plane at the negative radius
         Plane radVerticalPlane = new Plane( new Vector3D( 0, -stockDiameter.get()/2, 0), new Vector3D(0,-1,0), Constants.TOLERANCE);
-        Line line = prevPlane.intersection(radVerticalPlane);
-        lineList.add(line);
+        lineList.add(prevPlane.intersection(radVerticalPlane));
         
         // We now have a list of 3D lines through the vertices of the drill edges.
         // We get the intersection of each line with a plane that is 2 mm above
@@ -194,9 +192,8 @@ public class Borr {
         // Now make two lists of intersection points with the lines in the line lists
         ArrayList<Vector3D> abovePointList = new ArrayList<>();
         ArrayList<Vector3D> belowPointList = new ArrayList<>();
-        Iterator<Line> lineIterator = lineList.iterator();
-        while ( lineIterator.hasNext() ) {
-            line = lineIterator.next();
+
+        for ( Line line : lineList ) {
             Vector3D aboveIntersection = abovePlane.intersection(line);
             Vector3D belowIntersection = belowPlane.intersection(line);
             Vector3D mirroredBelow = new Vector3D(belowIntersection.getX(), -belowIntersection.getY(), -belowIntersection.getZ());
